@@ -7,14 +7,23 @@ static bool x64System(::std::string* a = nullptr, ::std::wstring* w = nullptr) n
     static wchar_t dw[4096]{ };
     static bool r{ };
 
-    r = ::GetSystemWow64DirectoryA(da, ::std::atoi(XCS("4095"))) || \
-        ::GetSystemWow64DirectoryW(dw, ::std::atoi(XCS("4095")));
+    r = false;
 
-    if (a)
-        a->assign(da);
+    if (::GetSystemWow64DirectoryA(da, ::std::atoi(XCS("4095"))))
+    {
+        if (a)
+            a->assign(da);
 
-    if (w)
-        w->assign(dw);
+        r = true;
+    }
+
+    if (::GetSystemWow64DirectoryW(dw, ::std::atoi(XCS("4095"))))
+    {
+        if (w)
+            w->assign(dw);
+
+        r = true;
+    }
 
     return r;
 }
@@ -345,7 +354,7 @@ static ::std::string& truncateFullPathToAddFileName(::std::string& p) noexcept
 
     static ::std::size_t w{ };
 
-    if (p.empty())
+    if (p.empty() || p.ends_with(q.at(SE_ZERO)) || p.ends_with(q.at(SE_ONE)))
         return p;
 
     w = p.find_last_of(q.at(SE_ZERO));
@@ -367,7 +376,7 @@ static ::std::wstring& truncateFullPathToAddFileName(::std::wstring& p) noexcept
 
     static ::std::size_t w{ };
 
-    if (p.empty())
+    if (p.empty() || p.ends_with(q.at(SE_ZERO)) || p.ends_with(q.at(SE_ONE)))
         return p;
 
     w = p.find_last_of(q.at(SE_ZERO));
@@ -866,6 +875,62 @@ static void resolveLicenses(::std::string f, ::std::string t, ::std::vector < ::
         return;
 
     ::fopen_s(&tf, t.c_str(), XCS("w"));
+
+    if (!tf)
+    {
+        if (ff)
+            ::std::fclose(ff), ff = nullptr;
+
+        return;
+    }
+
+    s = l.size(), d = { };
+
+    while (SE_ZERO == ::std::feof(ff))
+    {
+        b[SE_ZERO] = SE_ZERO, ::std::fgets(b, ::std::atoi(XCS("4095")), ff), c.assign(b);
+
+        if (c.find(k.c_str()) != ::std::string::npos && !d)
+        {
+            for (i = SE_ZERO, r.clear(); i < s; i++)
+            {
+                if (i != (s - SE_ONE))
+                {
+                    if (i == SE_ZERO)
+                        r.append(fn.c_str()), r.append(XCS("(\"")), r.append(l[i]), r.append(XCS("\"), \\\n"));
+
+                    else
+                        r.append(XCS("\t")), r.append(fn.c_str()), r.append(XCS("(\"")), r.append(l[i]), r.append(XCS("\"), \\\n"));
+                }
+
+                else
+                    r.append(XCS("\t")), r.append(fn.c_str()), r.append(XCS("(\"")), r.append(l[i]), r.append(XCS("\"),"));
+            }
+
+            ::replaceOnce(c, k.c_str(), r), d = true;
+        }
+
+        ::std::fprintf(tf, c.c_str());
+    }
+
+    ::std::fclose(ff), ff = nullptr, ::std::fclose(tf), tf = nullptr;
+}
+
+static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < ::std::string > l, \
+    ::std::string k = XCS("HWIDS"), ::std::string fn = XCS("XS")) noexcept
+{
+    static ::_iobuf* ff{ }, * tf{ };
+    static char b[4096]{ };
+    static ::std::string c{ }, r{ };
+    static ::std::size_t s{ }, i{ };
+    static bool d{ };
+
+    ::_wfopen_s(&ff, f.c_str(), ::toUnicode(XCS("r")).c_str());
+
+    if (!ff)
+        return;
+
+    ::_wfopen_s(&tf, t.c_str(), ::toUnicode(XCS("w")).c_str());
 
     if (!tf)
     {
