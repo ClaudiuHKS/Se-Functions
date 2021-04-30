@@ -923,6 +923,9 @@ static void resolveLicenses(::std::string f, ::std::string t, ::std::vector < ::
             ::replaceOnce(c, k.c_str(), r), d = true;
         }
 
+        if (c.find(XCS("%")) != ::std::string::npos)
+            ::replaceAll(c, XCS("%"), XCS("%%"));
+
         ::std::fprintf(tf, c.c_str());
     }
 
@@ -979,6 +982,9 @@ static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < 
             ::replaceOnce(c, k.c_str(), r), d = true;
         }
 
+        if (c.find(XCS("%")) != ::std::string::npos)
+            ::replaceAll(c, XCS("%"), XCS("%%"));
+
         ::std::fprintf(tf, c.c_str());
     }
 
@@ -996,18 +1002,19 @@ static float elapsedSince(::std::clock_t s) noexcept
     return ((float)(r)) / p;
 }
 
-static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(XCS("128")), \
-    unsigned long d = (unsigned long) ::std::atoi(XCS("4096"))) noexcept
+static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(XCS("128")), unsigned long d = (unsigned long) ::std::atoi(XCS("4096")), \
+    long long m = (long long) ::std::atoi(XCS("12"))) noexcept
 {
     static wchar_t* p{ };
     static ::std::wstring b{ };
     static ::std::size_t c{ };
+    static long long s{ };
 
     p = nullptr, ::SHGetKnownFolderPath(::FOLDERID_InternetCache, SE_ZERO, nullptr, &p);
 
     if (p)
     {
-        b.assign(p);
+        b.assign(p), s = ::std::time(nullptr);
 
         if (b.ends_with(::toUnicode(XCS("\\")).c_str()))
             b.append(::toUnicode(XCS("IE")).c_str());
@@ -1027,7 +1034,7 @@ static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(
                     c++;
             }
 
-            if (c < (::std::size_t)SE_ONE)
+            if (c < (::std::size_t)SE_ONE || ::std::time(nullptr) - s > m)
                 return;
 
             ::Sleep(f);
