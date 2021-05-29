@@ -1002,8 +1002,7 @@ static float elapsedSince(::std::clock_t s) noexcept
     return ((float)(r)) / p;
 }
 
-static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(XCS("128")), unsigned long d = (unsigned long) ::std::atoi(XCS("4096")), \
-    long long m = (long long) ::std::atoi(XCS("12"))) noexcept
+static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atof(XCS("4.00000")), long long m = (long long) ::std::atof(XCS("4.00000"))) noexcept
 {
     static wchar_t* p{ };
     static ::std::wstring b{ };
@@ -1022,7 +1021,7 @@ static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(
         else
             b.append(::toUnicode(XCS("\\IE")).c_str());
 
-        ::_wmkdir(b.c_str()), ::Sleep(::std::atoi(XCS("128")));
+        ::_wmkdir(b.c_str());
 
         while (SE_ONE)
         {
@@ -1040,7 +1039,4 @@ static void freezeForCacheCleared(unsigned long f = (unsigned long) ::std::atoi(
             ::Sleep(f);
         }
     }
-
-    else
-        ::Sleep(d);
 }
