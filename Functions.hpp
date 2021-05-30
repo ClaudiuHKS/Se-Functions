@@ -617,7 +617,7 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(v
     static long r{ };
     static unsigned long s{ };
 
-    if (::RegOpenKeyExA(HKEY_LOCAL_MACHINE, f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
+    if (::RegOpenKeyExA(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
         return { };
 
     for (i = SE_ZERO, l.clear(); i < ((::std::numeric_limits < ::std::size_t > ::max) ()); i++)
@@ -629,7 +629,7 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(v
         {
             e.assign(f.c_str()), e.append(XCS("\\")), e.append(b);
 
-            if (::RegOpenKeyExA(HKEY_LOCAL_MACHINE, e.c_str(), SE_ZERO, SE_ONE, &a) != SE_ZERO)
+            if (::RegOpenKeyExA(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), e.c_str(), SE_ZERO, SE_ONE, &a) != SE_ZERO)
             {
                 if (a)
                     ::RegCloseKey(a), a = nullptr;
@@ -683,7 +683,7 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     static long r{ };
     static unsigned long s{ };
 
-    if (::RegOpenKeyExW(HKEY_LOCAL_MACHINE, f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
+    if (::RegOpenKeyExW(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
         return { };
 
     for (i = SE_ZERO, l.clear(); i < ((::std::numeric_limits < ::std::size_t > ::max) ()); i++)
@@ -695,7 +695,7 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
         {
             e.assign(f.c_str()), e.append(::toUnicode(XCS("\\")).c_str()), e.append(b);
 
-            if (::RegOpenKeyExW(HKEY_LOCAL_MACHINE, e.c_str(), SE_ZERO, SE_ONE, &a) != SE_ZERO)
+            if (::RegOpenKeyExW(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), e.c_str(), SE_ZERO, SE_ONE, &a) != SE_ZERO)
             {
                 if (a)
                     ::RegCloseKey(a), a = nullptr;
@@ -807,7 +807,7 @@ static ::std::string retrieveSteamUsersFilePath(void) noexcept
     static unsigned long s{ };
     static ::std::string f{ };
 
-    ::RegOpenKeyExA(HKEY_CURRENT_USER, XCS("SOFTWARE\\Valve\\Steam"), SE_ZERO, SE_ONE, &k);
+    ::RegOpenKeyExA(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483649"), nullptr, SE_0)))), XCS("SOFTWARE\\Valve\\Steam"), SE_ZERO, SE_ONE, &k);
 
     if (k)
     {
@@ -835,7 +835,7 @@ static ::std::wstring retrieveSteamUsersFilePathUnicode(void) noexcept
     static unsigned long s{ };
     static ::std::wstring f{ };
 
-    ::RegOpenKeyExW(HKEY_CURRENT_USER, ::toUnicode(XCS("SOFTWARE\\Valve\\Steam")).c_str(), SE_ZERO, SE_ONE, &k);
+    ::RegOpenKeyExW(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483649"), nullptr, SE_0)))), ::toUnicode(XCS("SOFTWARE\\Valve\\Steam")).c_str(), SE_ZERO, SE_ONE, &k);
 
     if (k)
     {
