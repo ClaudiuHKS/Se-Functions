@@ -620,7 +620,7 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(v
     if (::RegOpenKeyExA(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
         return { };
 
-    for (i = SE_ZERO, l.clear(); i < ((::std::numeric_limits < ::std::size_t > ::max) ()); i++)
+    for (i = SE_ZERO, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i++)
     {
         ::std::memset(b, SE_ZERO, ::std::atoi(XCS("4096"))), s = ::std::atoi(XCS("4095")), \
             r = ::RegEnumKeyExA(t, (unsigned long)i, b, &s, nullptr, nullptr, nullptr, nullptr);
@@ -686,7 +686,7 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     if (::RegOpenKeyExW(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_ZERO, SE_EIGHT, &t) != SE_ZERO)
         return { };
 
-    for (i = SE_ZERO, l.clear(); i < ((::std::numeric_limits < ::std::size_t > ::max) ()); i++)
+    for (i = SE_ZERO, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i++)
     {
         ::std::memset(b, SE_ZERO, ::std::atoi(XCS("8192"))), s = ::std::atoi(XCS("4095")), \
             r = ::RegEnumKeyExW(t, (unsigned long)i, b, &s, nullptr, nullptr, nullptr, nullptr);
