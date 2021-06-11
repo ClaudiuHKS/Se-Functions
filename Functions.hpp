@@ -30,23 +30,23 @@ static bool x64System(::std::string* a = nullptr, ::std::wstring* w = nullptr) n
 
 static void toUpper(char* b) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (!b || *b == SE_0)
         return;
 
-    for (i = SE_0; i < ::std::strlen(b); i++)
+    for (i = SE_0; i < ::std::strlen(b); i = (i + ((unsigned int)(SE_1))))
         b[i] = ::std::toupper(b[i]);
 }
 
 static void toUpper(wchar_t* b) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (!b || *b == SE_0)
         return;
 
-    for (i = SE_0; i < ::std::wcslen(b); i++)
+    for (i = SE_0; i < ::std::wcslen(b); i = (i + ((unsigned int)(SE_1))))
         b[i] = ::std::towupper(b[i]);
 }
 
@@ -112,23 +112,23 @@ static void toUpper(::std::wstring* b) noexcept
 
 static void toLower(char* b) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (!b || *b == SE_0)
         return;
 
-    for (i = SE_0; i < ::std::strlen(b); i++)
+    for (i = SE_0; i < ::std::strlen(b); i = (i + ((unsigned int)(SE_1))))
         b[i] = ::std::tolower(b[i]);
 }
 
 static void toLower(wchar_t* b) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (!b || *b == SE_0)
         return;
 
-    for (i = SE_0; i < ::std::wcslen(b); i++)
+    for (i = SE_0; i < ::std::wcslen(b); i = (i + ((unsigned int)(SE_1))))
         b[i] = ::std::towlower(b[i]);
 }
 
@@ -194,7 +194,7 @@ static void toLower(::std::wstring* b) noexcept
 
 static ::std::wstring toUnicode(::std::string i) noexcept
 {
-    static const unsigned int u{ ((unsigned int)(::std::atoi(XCS("65001")))) };
+    static const unsigned int u{ ((unsigned int)(::std::atoi(XCS("65001")))), };
 
     static wchar_t w[4096]{ };
     static ::std::wstring r{ };
@@ -216,7 +216,7 @@ static ::std::wstring toUnicode(::std::string i) noexcept
 
 static ::std::string fromUnicode(::std::wstring i) noexcept
 {
-    static const unsigned int u{ ((unsigned int)(::std::atoi(XCS("65001")))) };
+    static const unsigned int u{ ((unsigned int)(::std::atoi(XCS("65001")))), };
 
     static char b[4096]{ };
     static ::std::string r{ };
@@ -240,14 +240,14 @@ static ::std::string fromUnicode(::std::wstring i) noexcept
 
 static ::std::string& replaceAll(::std::string& i, ::std::string f, ::std::string t) noexcept
 {
-    static ::std::size_t w{ }, fl{ }, tl{ };
+    static unsigned int w{ }, fl{ }, tl{ };
 
     if (i.empty() || f.empty())
         return i;
 
     w = SE_0, fl = f.length(), tl = t.length();
 
-    while ((w = i.find(f, w)) != ::std::string::npos)
+    while ((w = i.find(f, w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, fl, t), w += tl;
 
     return i;
@@ -255,14 +255,14 @@ static ::std::string& replaceAll(::std::string& i, ::std::string f, ::std::strin
 
 static ::std::wstring& replaceAll(::std::wstring& i, ::std::wstring f, ::std::wstring t) noexcept
 {
-    static ::std::size_t w{ }, fl{ }, tl{ };
+    static unsigned int w{ }, fl{ }, tl{ };
 
     if (i.empty() || f.empty())
         return i;
 
     w = SE_0, fl = f.length(), tl = t.length();
 
-    while ((w = i.find(f, w)) != ::std::string::npos)
+    while ((w = i.find(f, w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, fl, t), w += tl;
 
     return i;
@@ -270,12 +270,12 @@ static ::std::wstring& replaceAll(::std::wstring& i, ::std::wstring f, ::std::ws
 
 static ::std::string& replaceOnce(::std::string& i, ::std::string f, ::std::string t) noexcept
 {
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (i.empty() || f.empty())
         return i;
 
-    if ((w = i.find(f)) != ::std::string::npos)
+    if ((w = i.find(f)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, f.length(), t);
 
     return i;
@@ -283,12 +283,12 @@ static ::std::string& replaceOnce(::std::string& i, ::std::string f, ::std::stri
 
 static ::std::wstring& replaceOnce(::std::wstring& i, ::std::wstring f, ::std::wstring t) noexcept
 {
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (i.empty() || f.empty())
         return i;
 
-    if ((w = i.find(f)) != ::std::string::npos)
+    if ((w = i.find(f)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, f.length(), t);
 
     return i;
@@ -298,14 +298,14 @@ static ::std::string& eraseAll(::std::string& i, ::std::string f) noexcept
 {
     static const ::std::string e{ };
 
-    static ::std::size_t w{ }, fl{ };
+    static unsigned int w{ }, fl{ };
 
     if (i.empty() || f.empty())
         return i;
 
     w = SE_0, fl = f.length();
 
-    while ((w = i.find(f, w)) != ::std::string::npos)
+    while ((w = i.find(f, w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, fl, e);
 
     return i;
@@ -315,14 +315,14 @@ static ::std::wstring& eraseAll(::std::wstring& i, ::std::wstring f) noexcept
 {
     static const ::std::wstring e{ };
 
-    static ::std::size_t w{ }, fl{ };
+    static unsigned int w{ }, fl{ };
 
     if (i.empty() || f.empty())
         return i;
 
     w = SE_0, fl = f.length();
 
-    while ((w = i.find(f, w)) != ::std::string::npos)
+    while ((w = i.find(f, w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, fl, e);
 
     return i;
@@ -332,12 +332,12 @@ static ::std::string& eraseOnce(::std::string& i, ::std::string f) noexcept
 {
     static const ::std::string e{ };
 
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (i.empty() || f.empty())
         return i;
 
-    if ((w = i.find(f)) != ::std::string::npos)
+    if ((w = i.find(f)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, f.length(), e);
 
     return i;
@@ -347,12 +347,12 @@ static ::std::wstring& eraseOnce(::std::wstring& i, ::std::wstring f) noexcept
 {
     static const ::std::wstring e{ };
 
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (i.empty() || f.empty())
         return i;
 
-    if ((w = i.find(f)) != ::std::string::npos)
+    if ((w = i.find(f)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.replace(w, f.length(), e);
 
     return i;
@@ -360,56 +360,56 @@ static ::std::wstring& eraseOnce(::std::wstring& i, ::std::wstring f) noexcept
 
 static ::std::string& truncateFullPathToAddFileName(::std::string& p) noexcept
 {
-    static const ::std::string q{ XCS("\\/") };
+    static const ::std::string q{ XCS("\\/"), };
 
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (p.empty() || p.ends_with(q.at(SE_0)) || p.ends_with(q.at(SE_1)))
         return p;
 
     w = p.find_last_of(q.at(SE_0));
 
-    if (w != ::std::string::npos)
-        p.erase(w + ::std::size_t(SE_1));
+    if (w != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
+        p.erase(w + ((unsigned int)(SE_1)));
 
     w = p.find_last_of(q.at(SE_1));
 
-    if (w != ::std::string::npos)
-        p.erase(w + ::std::size_t(SE_1));
+    if (w != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
+        p.erase(w + ((unsigned int)(SE_1)));
 
     return p;
 }
 
 static ::std::wstring& truncateFullPathToAddFileName(::std::wstring& p) noexcept
 {
-    static const ::std::wstring q{ ::toUnicode(XCS("\\/")).c_str() };
+    static const ::std::wstring q{ ::toUnicode(XCS("\\/")).c_str(), };
 
-    static ::std::size_t w{ };
+    static unsigned int w{ };
 
     if (p.empty() || p.ends_with(q.at(SE_0)) || p.ends_with(q.at(SE_1)))
         return p;
 
     w = p.find_last_of(q.at(SE_0));
 
-    if (w != ::std::string::npos)
-        p.erase(w + ::std::size_t(SE_1));
+    if (w != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
+        p.erase(w + ((unsigned int)(SE_1)));
 
     w = p.find_last_of(q.at(SE_1));
 
-    if (w != ::std::string::npos)
-        p.erase(w + ::std::size_t(SE_1));
+    if (w != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
+        p.erase(w + ((unsigned int)(SE_1)));
 
     return p;
 }
 
 static ::std::string& replaceOneChar(::std::string& i, ::std::string f, ::std::string t) noexcept
 {
-    static ::std::size_t x{ };
+    static unsigned int x{ };
 
     if (i.empty())
         return i;
 
-    for (x = (::std::size_t)SE_0; x < i.length(); x++)
+    for (x = (unsigned int)SE_0; x < i.length(); x = (x + ((unsigned int)(SE_1))))
     {
         if (i[x] == f[SE_0])
             i[x] = t[SE_0];
@@ -420,12 +420,12 @@ static ::std::string& replaceOneChar(::std::string& i, ::std::string f, ::std::s
 
 static ::std::wstring& replaceOneChar(::std::wstring& i, ::std::wstring f, ::std::wstring t) noexcept
 {
-    static ::std::size_t x{ };
+    static unsigned int x{ };
 
     if (i.empty())
         return i;
 
-    for (x = (::std::size_t)SE_0; x < i.length(); x++)
+    for (x = (unsigned int)SE_0; x < i.length(); x = (x + ((unsigned int)(SE_1))))
     {
         if (i[x] == f[SE_0])
             i[x] = t[SE_0];
@@ -436,12 +436,12 @@ static ::std::wstring& replaceOneChar(::std::wstring& i, ::std::wstring f, ::std
 
 static ::std::string& trimBeg(::std::string& i, ::std::string w = XCS(" \f\n\r\t\v")) noexcept
 {
-    static ::std::size_t p{ };
+    static unsigned int p{ };
 
     if (i.empty() || w.empty())
         return i;
 
-    if ((p = i.find_first_not_of(w)) != ::std::string::npos)
+    if ((p = i.find_first_not_of(w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.erase(SE_0, p);
 
     else
@@ -452,12 +452,12 @@ static ::std::string& trimBeg(::std::string& i, ::std::string w = XCS(" \f\n\r\t
 
 static ::std::wstring& trimBeg(::std::wstring& i, ::std::wstring w = ::toUnicode(XCS(" \f\n\r\t\v")).c_str()) noexcept
 {
-    static ::std::size_t p{ };
+    static unsigned int p{ };
 
     if (i.empty() || w.empty())
         return i;
 
-    if ((p = i.find_first_not_of(w)) != ::std::wstring::npos)
+    if ((p = i.find_first_not_of(w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.erase(SE_0, p);
 
     else
@@ -468,12 +468,12 @@ static ::std::wstring& trimBeg(::std::wstring& i, ::std::wstring w = ::toUnicode
 
 static ::std::string& trimEnd(::std::string& i, ::std::string w = XCS(" \f\n\r\t\v")) noexcept
 {
-    static ::std::size_t p{ };
+    static unsigned int p{ };
 
     if (i.empty() || w.empty())
         return i;
 
-    if ((p = i.find_last_not_of(w)) != ::std::string::npos)
+    if ((p = i.find_last_not_of(w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.erase(p + SE_1);
 
     else
@@ -484,12 +484,12 @@ static ::std::string& trimEnd(::std::string& i, ::std::string w = XCS(" \f\n\r\t
 
 static ::std::wstring& trimEnd(::std::wstring& i, ::std::wstring w = ::toUnicode(XCS(" \f\n\r\t\v")).c_str()) noexcept
 {
-    static ::std::size_t p{ };
+    static unsigned int p{ };
 
     if (i.empty() || w.empty())
         return i;
 
-    if ((p = i.find_last_not_of(w)) != ::std::wstring::npos)
+    if ((p = i.find_last_not_of(w)) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
         i.erase(p + SE_1);
 
     else
@@ -551,12 +551,12 @@ static bool procRunning(::std::string n) noexcept
     static unsigned long l[4096]{ }, c{ }, s{ };
     static char on[4096]{ };
     static void* p{ };
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (n.empty() || SE_0 == ::K32EnumProcesses(l, ::std::atoi(XCS("16384")), &c))
         return { };
 
-    for (i = SE_0, s = ::GetCurrentProcessId(); i < (c / SE_4); i++)
+    for (i = SE_0, s = ::GetCurrentProcessId(); i < (c / SE_4); i = (i + ((unsigned int)(SE_1))))
     {
         if (l[i] != SE_0 && l[i] != s)
         {
@@ -580,12 +580,12 @@ static bool procRunning(::std::wstring n) noexcept
     static unsigned long l[4096]{ }, c{ }, s{ };
     static wchar_t on[4096]{ };
     static void* p{ };
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (n.empty() || SE_0 == ::K32EnumProcesses(l, ::std::atoi(XCS("16384")), &c))
         return { };
 
-    for (i = SE_0, s = ::GetCurrentProcessId(); i < (c / SE_4); i++)
+    for (i = SE_0, s = ::GetCurrentProcessId(); i < (c / SE_4); i = (i + ((unsigned int)(SE_1))))
     {
         if (l[i] != SE_0 && l[i] != s)
         {
@@ -606,12 +606,12 @@ static bool procRunning(::std::wstring n) noexcept
 
 static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(void) noexcept
 {
-    static const ::std::string f{ XCS("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall") };
+    static const ::std::string f{ XCS("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall"), };
 
     static ::HKEY__* t{ }, * a{ };
     static ::std::vector < ::std::pair < ::std::string, ::std::string > > l{ };
     static ::std::pair < ::std::string, ::std::string > p{ };
-    static ::std::size_t i{ };
+    static unsigned int i{ };
     static ::std::string e{ };
     static char b[4096]{ };
     static long r{ };
@@ -620,7 +620,7 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(v
     if (::RegOpenKeyExA(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_0, ::std::strtoul(XCS("983103"), nullptr, SE_0), &t) != SE_0 || !t)
         return { };
 
-    for (i = SE_0, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i++)
+    for (i = SE_0, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i = (i + ((unsigned int)(SE_1))))
     {
         ::std::memset(b, SE_0, ::std::atoi(XCS("4096"))), s = ::std::atoi(XCS("4095")), \
             r = ::RegEnumKeyExA(t, (unsigned long)i, b, &s, nullptr, nullptr, nullptr, nullptr);
@@ -672,12 +672,12 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps(v
 
 static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumAppsUnicode(void) noexcept
 {
-    static const ::std::wstring f{ ::toUnicode(XCS("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall")).c_str() };
+    static const ::std::wstring f{ ::toUnicode(XCS("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall")).c_str(), };
 
     static ::HKEY__* t{ }, * a{ };
     static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l{ };
     static ::std::pair < ::std::wstring, ::std::wstring > p{ };
-    static ::std::size_t i{ };
+    static unsigned int i{ };
     static ::std::wstring e{ };
     static wchar_t b[4096]{ };
     static long r{ };
@@ -686,7 +686,7 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     if (::RegOpenKeyExW(((::HKEY__*)(unsigned long)((long)(::std::strtoull(XCS("2147483650"), nullptr, SE_0)))), f.c_str(), SE_0, ::std::strtoul(XCS("983103"), nullptr, SE_0), &t) != SE_0 || !t)
         return { };
 
-    for (i = SE_0, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i++)
+    for (i = SE_0, l.clear(); i < ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))); i = (i + ((unsigned int)(SE_1))))
     {
         ::std::memset(b, SE_0, ::std::atoi(XCS("8192"))), s = ::std::atoi(XCS("4095")), \
             r = ::RegEnumKeyExW(t, (unsigned long)i, b, &s, nullptr, nullptr, nullptr, nullptr);
@@ -736,33 +736,33 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     return l;
 }
 
-static ::std::size_t countAppsByPartOfName(::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l) noexcept
+static unsigned int countAppsByPartOfName(::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l) noexcept
 {
-    static ::std::size_t i{ }, c{ };
+    static unsigned int i{ }, c{ };
 
     if (p.empty() || l.empty())
         return { };
 
-    for (c = SE_0, i = SE_0; i < l.size(); i++)
+    for (c = SE_0, i = SE_0; i < l.size(); i = (i + ((unsigned int)(SE_1))))
     {
         if (::std::strstr(l[i].first.c_str(), p.c_str()))
-            c++;
+            c = (c + ((unsigned int)(SE_1)));
     }
 
     return c;
 }
 
-static ::std::size_t countAppsByPartOfName(::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l) noexcept
+static unsigned int countAppsByPartOfName(::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l) noexcept
 {
-    static ::std::size_t i{ }, c{ };
+    static unsigned int i{ }, c{ };
 
     if (p.empty() || l.empty())
         return { };
 
-    for (c = SE_0, i = SE_0; i < l.size(); i++)
+    for (c = SE_0, i = SE_0; i < l.size(); i = (i + ((unsigned int)(SE_1))))
     {
         if (::std::wcsstr(l[i].first.c_str(), p.c_str()))
-            c++;
+            c = (c + ((unsigned int)(SE_1)));
     }
 
     return c;
@@ -770,12 +770,12 @@ static ::std::size_t countAppsByPartOfName(::std::wstring p, ::std::vector < ::s
 
 static ::std::string retrieveAppVersionByPartOfName(::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (p.empty() || l.empty())
         return { };
 
-    for (i = SE_0; i < l.size(); i++)
+    for (i = SE_0; i < l.size(); i = (i + ((unsigned int)(SE_1))))
     {
         if (::std::strstr(l[i].first.c_str(), p.c_str()))
             return l[i].second;
@@ -786,12 +786,12 @@ static ::std::string retrieveAppVersionByPartOfName(::std::string p, ::std::vect
 
 static ::std::wstring retrieveAppVersionByPartOfName(::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l) noexcept
 {
-    static ::std::size_t i{ };
+    static unsigned int i{ };
 
     if (p.empty() || l.empty())
         return { };
 
-    for (i = SE_0; i < l.size(); i++)
+    for (i = SE_0; i < l.size(); i = (i + ((unsigned int)(SE_1))))
     {
         if (::std::wcsstr(l[i].first.c_str(), p.c_str()))
             return l[i].second;
@@ -839,7 +839,7 @@ static ::std::wstring retrieveSteamUsersFilePathUnicode(void) noexcept
             ::RegQueryValueExW(k, ::toUnicode(XCS("SteamPath")).c_str(), nullptr, nullptr, ((unsigned char*)(p)), &s), \
             ::RegCloseKey(k), k = nullptr;
 
-        if (::std::wcslen(p) > (::std::size_t)SE_0)
+        if (::std::wcslen(p) > (unsigned int)SE_0)
         {
             f.assign(p), ::trimAll(f), ::removeQuotes(f), ::trimAll(f), \
                 ::replaceAll(f, ::toUnicode(XCS("/")).c_str(), ::toUnicode(XCS("\\")).c_str()), \
@@ -855,7 +855,7 @@ static ::std::wstring retrieveSteamUsersFilePathUnicode(void) noexcept
 static double cpuSpeed(void) noexcept
 {
     static const double p{ ((double)(::std::strtod(XCS("1000000.0"), nullptr))), };
-    static const int f{ (int)SE_5, };
+    static const int f{ ((int)(SE_5)), };
 
     static ::_LARGE_INTEGER w{ }, s{ }, c{ };
     static unsigned long long x{ };
@@ -875,7 +875,7 @@ static void resolveLicenses(::std::string f, ::std::string t, ::std::vector < ::
     static ::_iobuf* ff{ }, * tf{ };
     static char b[4096]{ };
     static ::std::string c{ }, r{ };
-    static ::std::size_t s{ }, i{ };
+    static unsigned int s{ }, i{ };
     static bool d{ };
 
     ::fopen_s(&ff, f.c_str(), XCS("r"));
@@ -899,9 +899,9 @@ static void resolveLicenses(::std::string f, ::std::string t, ::std::vector < ::
     {
         b[SE_0] = SE_0, ::std::fgets(b, ::std::atoi(XCS("4095")), ff), c.assign(b);
 
-        if (c.find(k.c_str()) != ::std::string::npos && !d)
+        if (c.find(k.c_str()) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))) && !d)
         {
-            for (i = SE_0, r.clear(); i < s; i++)
+            for (i = SE_0, r.clear(); i < s; i = (i + ((unsigned int)(SE_1))))
             {
                 if (i != (s - SE_1))
                 {
@@ -919,7 +919,7 @@ static void resolveLicenses(::std::string f, ::std::string t, ::std::vector < ::
             ::replaceOnce(c, k.c_str(), r), d = true;
         }
 
-        if (c.find(XCS("%")) != ::std::string::npos)
+        if (c.find(XCS("%")) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
             ::replaceAll(c, XCS("%"), XCS("%%"));
 
         ::std::fprintf(tf, c.c_str());
@@ -934,7 +934,7 @@ static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < 
     static ::_iobuf* ff{ }, * tf{ };
     static char b[4096]{ };
     static ::std::string c{ }, r{ };
-    static ::std::size_t s{ }, i{ };
+    static unsigned int s{ }, i{ };
     static bool d{ };
 
     ::_wfopen_s(&ff, f.c_str(), ::toUnicode(XCS("r")).c_str());
@@ -958,9 +958,9 @@ static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < 
     {
         b[SE_0] = SE_0, ::std::fgets(b, ::std::atoi(XCS("4095")), ff), c.assign(b);
 
-        if (c.find(k.c_str()) != ::std::string::npos && !d)
+        if (c.find(k.c_str()) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))) && !d)
         {
-            for (i = SE_0, r.clear(); i < s; i++)
+            for (i = SE_0, r.clear(); i < s; i = (i + ((unsigned int)(SE_1))))
             {
                 if (i != (s - SE_1))
                 {
@@ -978,7 +978,7 @@ static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < 
             ::replaceOnce(c, k.c_str(), r), d = true;
         }
 
-        if (c.find(XCS("%")) != ::std::string::npos)
+        if (c.find(XCS("%")) != ((unsigned int)(::std::strtoull(XCS("4294967295"), nullptr, SE_0))))
             ::replaceAll(c, XCS("%"), XCS("%%"));
 
         ::std::fprintf(tf, c.c_str());
@@ -987,11 +987,11 @@ static void resolveLicenses(::std::wstring f, ::std::wstring t, ::std::vector < 
     ::std::fclose(ff), ff = nullptr, ::std::fclose(tf), tf = nullptr;
 }
 
-static float elapsedSince(::std::clock_t s) noexcept
+static float elapsedSince(long s) noexcept
 {
-    static const ::std::clock_t p{ ((::std::clock_t)(::std::atoi(XCS("1000")))) };
+    static const long p{ ((long)(::std::atoi(XCS("1000")))), };
 
-    static ::std::clock_t r{ };
+    static long r{ };
 
     r = ::std::clock() - s;
 
@@ -1029,7 +1029,7 @@ static float retrieveWindowsVersion(void) noexcept
     return SE_0_F;
 }
 
-static void storeBytesToFile(const ::std::string n, const ::std::vector < unsigned char > v) noexcept
+static void storeBytesToFile(::std::string n, ::std::vector < unsigned char > v) noexcept
 {
     static ::std::basic_ofstream < unsigned char, ::std::char_traits < unsigned char > > f{ };
 
@@ -1041,7 +1041,7 @@ static void storeBytesToFile(const ::std::string n, const ::std::vector < unsign
     f.clear();
 }
 
-static void storeBytesToFile(const ::std::wstring n, const ::std::vector < unsigned char > v) noexcept
+static void storeBytesToFile(::std::wstring n, ::std::vector < unsigned char > v) noexcept
 {
     static ::std::basic_ofstream < unsigned char, ::std::char_traits < unsigned char > > f{ };
 
@@ -1058,7 +1058,7 @@ static bool isChrSlash(long long llChr) noexcept
     return (((llChr == ((long long)(XS("\\/^&*()_+").at(SE_0)))) || (llChr == ((long long)(XS("\\/~!@#$").at(SE_1))))) ? ((bool)(SE_1)) : ((bool)(SE_0)));
 }
 
-static ::std::vector < unsigned char > readBinaryFileToMem(const ::std::string p) noexcept
+static ::std::vector < unsigned char > readBinaryFileToMem(::std::string p) noexcept
 {
     static ::std::vector < unsigned char > r{ };
     static ::std::basic_ifstream < unsigned char, ::std::char_traits < unsigned char > > f{ };
@@ -1072,13 +1072,13 @@ static ::std::vector < unsigned char > readBinaryFileToMem(const ::std::string p
         return r;
     }
 
-    f.seekg((long long)SE_0, SE_2), r.resize(static_cast <::std::size_t> (f.tellg())), f.seekg((long long)SE_0, SE_0), \
+    f.seekg((long long)SE_0, SE_2), r.resize(static_cast <unsigned int> (f.tellg())), f.seekg((long long)SE_0, SE_0), \
         f.read(r.data(), r.size()), f.close(), f.clear();
 
     return r;
 }
 
-static ::std::vector < unsigned char > readBinaryFileToMem(const ::std::wstring p) noexcept
+static ::std::vector < unsigned char > readBinaryFileToMem(::std::wstring p) noexcept
 {
     static ::std::vector < unsigned char > r{ };
     static ::std::basic_ifstream < unsigned char, ::std::char_traits < unsigned char > > f{ };
@@ -1092,13 +1092,13 @@ static ::std::vector < unsigned char > readBinaryFileToMem(const ::std::wstring 
         return r;
     }
 
-    f.seekg((long long)SE_0, SE_2), r.resize(static_cast <::std::size_t> (f.tellg())), f.seekg((long long)SE_0, SE_0), \
+    f.seekg((long long)SE_0, SE_2), r.resize(static_cast <unsigned int> (f.tellg())), f.seekg((long long)SE_0, SE_0), \
         f.read(r.data(), r.size()), f.close(), f.clear();
 
     return r;
 }
 
-static void freezeProcForMod(const unsigned long p, const ::std::string n) noexcept
+static void freezeProcForMod(unsigned long p, ::std::string n) noexcept
 {
     static void* s{ ((void*)(unsigned long)::std::atof(XCS("-1.00000"))), };
     static ::tagMODULEENTRY32W e{ };
@@ -1131,7 +1131,7 @@ static void freezeProcForMod(const unsigned long p, const ::std::string n) noexc
     }
 }
 
-static void freezeProcForMod(const unsigned long p, const ::std::wstring n) noexcept
+static void freezeProcForMod(unsigned long p, ::std::wstring n) noexcept
 {
     static void* s{ ((void*)(unsigned long)::std::atof(XCS("-1.00000"))), };
     static ::tagMODULEENTRY32W e{ };
@@ -1162,4 +1162,81 @@ static void freezeProcForMod(const unsigned long p, const ::std::wstring n) noex
 
         ::CloseHandle(s), s = ((void*)(unsigned long)::std::atof(XCS("-1.00000")));
     }
+}
+
+static void killSteamProcs(void) noexcept
+{
+    static const ::std::wstring p[] =
+    {
+        SE_UNI("steam.exe"), SE_UNI("steamservice.exe"), SE_UNI("gameoverlayui.exe"), SE_UNI("steamerrorreporter.exe"), \
+        SE_UNI("steamerrorreporter64.exe"), SE_UNI("streaming_client.exe"), SE_UNI("writeminidump.exe"), \
+        SE_UNI("steamwebhelper.exe"), SE_UNI("csgo.exe"),
+    };
+
+    static void* s{ ((void*)(unsigned long)::std::atof(XCS("-1.00000"))), }, * w{ };
+    static ::tagPROCESSENTRY32W e{ };
+    static unsigned int i{ };
+
+    s = ::CreateToolhelp32Snapshot(SE_2, SE_0);
+
+    while (s == ((void*)(unsigned long)::std::atof(XCS("-1.00000"))))
+        s = ::CreateToolhelp32Snapshot(SE_2, SE_0);
+
+    ::std::memset(&e, SE_0, ::std::atoi(XCS("556"))), e.dwSize = ::std::atoi(XCS("556"));
+
+    if (::Process32FirstW(s, &e))
+    {
+        do
+        {
+            for (i = SE_0; i < ((unsigned int)(SE_9)); i = (i + ((unsigned int)(SE_1))))
+            {
+                if (SE_0 == ::lstrcmpiW(e.szExeFile, p[i].c_str()))
+                {
+                    w = ::OpenProcess(::std::strtoul(XCS("2097151"), nullptr, SE_0), SE_0, e.th32ProcessID);
+
+                    if (w)
+                        ::TerminateProcess(w, SE_0), ::WaitForSingleObject(w, ::std::strtoul(XCS("4294967295"), nullptr, SE_0)), ::CloseHandle(w), i = SE_32;
+                }
+            }
+        }
+
+        while (::Process32NextW(s, &e));
+    }
+
+    ::CloseHandle(s), s = ((void*)(unsigned long)::std::atof(XCS("-1.00000")));
+}
+
+static unsigned long allGameModsLoaded(void* p) noexcept
+{
+    static const ::std::wstring l[] =
+    {
+        SE_UNI("gameoverlayrenderer.dll"), SE_UNI("client.dll"), SE_UNI("engine.dll"), SE_UNI("filesystem_stdio.dll"), \
+        SE_UNI("inputsystem.dll"), SE_UNI("localize.dll"), SE_UNI("materialsystem.dll"), SE_UNI("panorama.dll"), \
+        SE_UNI("soundemittersystem.dll"), SE_UNI("studiorender.dll"), SE_UNI("tier0.dll"), SE_UNI("vgui2.dll"), \
+        SE_UNI("vguimatsurface.dll"), SE_UNI("vphysics.dll"), SE_UNI("vstdlib.dll"),
+    };
+
+    static ::HINSTANCE__* m[1024]{ };
+    static unsigned long c{ }, i{ }, j{ }, o{ };
+    static wchar_t n[4096]{ };
+
+    if (SE_0 == ::K32EnumProcessModules(p, m, ::std::atoi(XCS("4096")), &c))
+        return ((unsigned long)(SE_0));
+
+    for (i = SE_1, o = SE_0; i < (c / SE_4); i = (i + ((unsigned long)(SE_1))))
+    {
+        if (::K32GetModuleBaseNameW(p, m[i], n, ::std::atoi(XCS("4095"))))
+        {
+            for (j = SE_0; j < ((unsigned long)(SE_15)); j = (j + ((unsigned long)(SE_1))))
+            {
+                if (::_wcsicmp(n, l[j].c_str()) == SE_0)
+                    o = (o + ((unsigned long)(SE_1))), j = ::std::atoi(XCS("524288"));
+            }
+        }
+    }
+
+    if (o > ((unsigned long)(SE_14)))
+        return ((unsigned long)(SE_1));
+
+    return ((unsigned long)(SE_0));
 }
