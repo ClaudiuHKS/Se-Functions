@@ -1240,3 +1240,71 @@ static unsigned long allGameModsLoaded(void* p) noexcept
 
     return ((unsigned long)(SE_0));
 }
+
+static void ensureMzHeader(::std::vector < unsigned char >& v) noexcept
+{
+    static unsigned int i{ };
+
+    for (i = ((unsigned int)(SE_0)); i < v.size(); i = (i + ((unsigned int)(SE_1))))
+    {
+        if ((v[i] == SE_10 || v[i] == SE_13) && v[i + SE_1] == ((int)(::std::atof(XCS("77.00000")))) && v[i + SE_2] == ((int)(::std::atof(XCS("90.00000")))))
+        {
+            v.erase(v.cbegin(), (v.cbegin() + i + SE_1));
+
+            break;
+        }
+    }
+}
+
+static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, ::std::string p, ::std::string a, ::std::string f) noexcept
+{
+    static ::std::vector < unsigned char > b{ };
+    static unsigned int s{ };
+    static ::hostent* w{ };
+    static char c[524288]{ }, q[4096]{ };
+    static int r{ }, i{ };
+
+    b.clear(), w = ::gethostbyname(u.c_str());
+
+    if (!w)
+        return b;
+
+    ::sockaddr_in v{ };
+
+    s = ::socket(SE_2, SE_1, SE_6), v.sin_family = SE_2, ::std::memcpy(&v.sin_addr, w->h_addr_list[SE_0], w->h_length), \
+        v.sin_port = ::htons(::std::atoi(p.c_str())), r = ::connect(s, (::sockaddr*)&v, SE_16);
+
+    if (r == ((int)(::std::atof(XCS("-1.00000")))))
+    {
+        ::closesocket(s);
+
+        return b;
+    }
+
+    r = ::sprintf_s(q, XCS("GET %s HTTP/%s\r\nHost: %s\r\n\r\n"), f.c_str(), a.c_str(), u.c_str()), \
+        r = ::send(s, q, r, SE_0);
+
+    if (r == ((int)(::std::atof(XCS("-1.00000")))))
+    {
+        ::closesocket(s);
+
+        return b;
+    }
+
+    ::shutdown(s, SE_1);
+
+    do
+    {
+        if ((r = ::recv(s, c, ((int)(::std::atof(XCS("524288.00000")))), SE_0)) > SE_0)
+        {
+            for (i = SE_0; i < r; i = (i + SE_1))
+                b.emplace_back(((unsigned char)(c[i])));
+        }
+    }
+
+    while (r > SE_0);
+
+    ::closesocket(s);
+
+    return b;
+}
