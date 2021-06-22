@@ -1256,13 +1256,16 @@ static void ensureMzHeader(::std::vector < unsigned char >& v) noexcept
     }
 }
 
-static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, ::std::string p, ::std::string a, ::std::string f) noexcept
+static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, ::std::string p, ::std::string a, ::std::string f, long long o = SE_4) noexcept
 {
     static ::std::vector < unsigned char > b{ };
     static unsigned int s{ };
     static ::hostent* w{ };
     static char c[524288]{ }, q[4096]{ };
     static int r{ }, i{ };
+    static ::timeval t{ };
+    static ::fd_set x{ };
+    static long long m{ };
 
     b.clear(), w = ::gethostbyname(u.c_str());
 
@@ -1291,7 +1294,16 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, 
         return b;
     }
 
-    ::shutdown(s, SE_1);
+    ::shutdown(s, SE_1), m = ::std::time(nullptr);
+
+    while (SE_1)
+    {
+        ::Sleep(SE_1), t.tv_sec = SE_0, t.tv_usec = SE_25, ::std::memset(&x, SE_0, ((unsigned int)(::std::atof(XCS("260.00000"))))), \
+            (&x)->fd_count = SE_1, (&x)->fd_array[SE_0] = s;
+
+        if (((::select(s + SE_1, &x, nullptr, nullptr, &t)) > SE_0) || ((::std::time(nullptr) - m) > o))
+            break;
+    }
 
     do
     {
