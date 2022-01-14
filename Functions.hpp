@@ -1256,12 +1256,12 @@ static void ensureMzHeader(::std::vector < unsigned char >& v) noexcept
     }
 }
 
-static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, ::std::string p, ::std::string a, ::std::string f, long long o = SE_4) noexcept
+static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, ::std::string p, ::std::string a, ::std::string f, long long o = SE_40) noexcept
 {
     static ::std::vector < unsigned char > b{ };
     static unsigned int s{ };
     static ::hostent* w{ };
-    static char c[524288]{ }, q[4096]{ };
+    static char c[8192]{ }, q[4096]{ };
     static int r{ }, i{ };
     static ::timeval t{ };
     static ::fd_set x{ };
@@ -1294,7 +1294,7 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, 
         return b;
     }
 
-    ::shutdown(s, SE_1), m = ::std::time(nullptr);
+    m = ::std::time(nullptr);
 
     while (SE_1)
     {
@@ -1305,16 +1305,11 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes(::std::string u, 
             break;
     }
 
-    do
+    while ((r = ::recv(s, c, ((int)(::std::atof(XCS("8192.00000")))), SE_0)) > SE_0)
     {
-        if ((r = ::recv(s, c, ((int)(::std::atof(XCS("524288.00000")))), SE_0)) > SE_0)
-        {
-            for (i = SE_0; i < r; i = (i + SE_1))
-                b.emplace_back(((unsigned char)(c[i])));
-        }
+        for (i = SE_0; i < r; i = (i + SE_1))
+            b.emplace_back(((unsigned char)(c[i])));
     }
-
-    while (r > SE_0);
 
     ::closesocket(s);
 
