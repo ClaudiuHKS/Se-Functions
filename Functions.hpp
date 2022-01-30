@@ -1392,3 +1392,129 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u
 
     return b;
 }
+
+static ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstring Prp ) noexcept
+{
+    ::std::vector < ::std::wstring > Vec = { };
+    ::IWbemLocator * Loc = { };
+    ::IWbemServices * Svc = { };
+    ::IWbemClassObject * Cls = { };
+    ::IEnumWbemClassObject * Enm = { };
+    ::tagVARIANT Var = { };
+    long Res = { };
+    wchar_t * Srv = { }, * Lng = { }, * Str = { };
+    unsigned long Val = { };
+
+    Res = ::CoInitializeEx ( { }, SE_0 );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    Res = ::CoInitializeSecurity ( { }, ( ( long ) ( ::std::atof ( XCS ( "-1.0000" ) ) ) ), { }, { }, SE_0, SE_3, { }, SE_0, { } );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    Res = ::CoCreateInstance ( ::CLSID_WbemLocator, { }, SE_1, ::IID_IWbemLocator, ( void ** ) &Loc );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    Srv = ::SysAllocString ( SE_UNI_C ( "ROOT\\CIMV2" ) );
+
+    if ( !Srv )
+    {
+        goto qrySysEnd;
+    }
+
+    Res = Loc->ConnectServer ( Srv, { }, { }, { }, SE_0, { }, { }, &Svc ), ::SysFreeString ( Srv );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    Res = ::CoSetProxyBlanket ( Svc, SE_10, SE_0, { }, SE_3, SE_3, { }, SE_0 );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    Lng = ::SysAllocString ( SE_UNI_C ( "WQL" ) );
+
+    if ( !Lng )
+    {
+        goto qrySysEnd;
+    }
+
+    Str = ::SysAllocString ( Qry.c_str ( ) );
+
+    if ( !Str )
+    {
+        goto qrySysEnd;
+    }
+
+    Res = Svc->ExecQuery ( Lng, Str, ( ( long ) ( ::std::atof ( XCS ( "48.0000" ) ) ) ), { }, &Enm ), ::SysFreeString ( Lng ), ::SysFreeString ( Str );
+
+    if ( Res < SE_0 )
+    {
+        goto qrySysEnd;
+    }
+
+    while ( Enm )
+    {
+        Res = Enm->Next ( ( ( long ) ( ::std::atof ( XCS ( "-1.00000" ) ) ) ), SE_1, &Cls, &Val );
+
+        if ( !Val )
+        {
+            goto qrySysEnd;
+        }
+
+        Res = Cls->Get ( Prp.c_str ( ), SE_0, &Var, { }, { } );
+
+        if ( Res )
+        {
+            goto qrySysEnd;
+        }
+
+        if ( Var.bstrVal )
+        {
+            Vec.emplace_back ( Var.bstrVal );
+        }
+    }
+
+qrySysEnd:
+
+    ::VariantClear ( &Var );
+
+    if ( Cls )
+    {
+        Cls->Release ( );
+    }
+
+    if ( Svc )
+    {
+        Svc->Release ( );
+    }
+
+    if ( Loc )
+    {
+        Loc->Release ( );
+    }
+
+    if ( Enm )
+    {
+        Enm->Release ( );
+    }
+
+    ::CoUninitialize ( );
+
+    return Vec;
+}
