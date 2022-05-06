@@ -1558,7 +1558,7 @@ static bool matchUserCompPagePhys ( ::std::wstring x ) noexcept
         m.dwLength = ( ( unsigned long ) ( w ) ), ::GlobalMemoryStatusEx ( &m ),
         p = ( ( long double ) ( m.ullTotalPageFile ) ) / ( ( long double ) ( o ) ) / ( ( long double ) ( o ) ),
         r = ( ( long double ) ( m.ullTotalPhys ) ) / ( ( long double ) ( o ) ) / ( ( long double ) ( o ) ),
-        ::wsprintfW ( s, f.c_str ( ), ( ( float ) ( p ) ), ( ( float ) ( r ) ) ), b += s;
+        ::swprintf_s ( s, f.c_str ( ), ( ( float ) ( p ) ), ( ( float ) ( r ) ) ), b += s;
 
     return ( z == ( ( int ) ( b.compare ( x.c_str ( ) ) ) ) );
 }
