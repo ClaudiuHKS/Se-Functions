@@ -3,7 +3,7 @@
 
 #include "Requirements.HPP"
 
-static __forceinline void exitSelf ( int x = SE_0 ) noexcept
+static void exitSelf ( int x = SE_0 ) noexcept
 {
     ::std::exit ( x ), ::std::quick_exit ( x ), ::ExitProcess ( x ), ::std::abort ( );
 
@@ -20,7 +20,7 @@ static __forceinline void exitSelf ( int x = SE_0 ) noexcept
     }
 }
 
-static __forceinline bool x64System ( ::std::string * a = nullptr, ::std::wstring * w = nullptr ) noexcept
+static bool x64System ( ::std::string * a = nullptr, ::std::wstring * w = nullptr ) noexcept
 {
     static char da [ 4096 ] { };
     static wchar_t dw [ 4096 ] { };
@@ -47,7 +47,7 @@ static __forceinline bool x64System ( ::std::string * a = nullptr, ::std::wstrin
     return r;
 }
 
-static __forceinline void toUpper ( char * b ) noexcept
+static void toUpper ( char * b ) noexcept
 {
     static unsigned int i { };
 
@@ -58,7 +58,7 @@ static __forceinline void toUpper ( char * b ) noexcept
         b [ i ] = ::std::toupper ( b [ i ] );
 }
 
-static __forceinline void toUpper ( wchar_t * b ) noexcept
+static void toUpper ( wchar_t * b ) noexcept
 {
     static unsigned int i { };
 
@@ -69,7 +69,7 @@ static __forceinline void toUpper ( wchar_t * b ) noexcept
         b [ i ] = ::std::towupper ( b [ i ] );
 }
 
-static __forceinline ::std::string & toUpper ( ::std::string & b ) noexcept
+static ::std::string & toUpper ( ::std::string & b ) noexcept
 {
     if ( b.empty ( ) )
         return b;
@@ -79,7 +79,7 @@ static __forceinline ::std::string & toUpper ( ::std::string & b ) noexcept
     return b;
 }
 
-static __forceinline ::std::string toUpper ( const char * b ) noexcept
+static ::std::string toUpper ( const char * b ) noexcept
 {
     static ::std::string u { };
 
@@ -91,7 +91,7 @@ static __forceinline ::std::string toUpper ( const char * b ) noexcept
     return u;
 }
 
-static __forceinline void toUpper ( ::std::string * b ) noexcept
+static void toUpper ( ::std::string * b ) noexcept
 {
     if ( !b || ( *b ).empty ( ) )
         return;
@@ -99,7 +99,7 @@ static __forceinline void toUpper ( ::std::string * b ) noexcept
     ::std::transform ( ( *b ).begin ( ), ( *b ).end ( ), ( *b ).begin ( ), ::toupper );
 }
 
-static __forceinline ::std::wstring & toUpper ( ::std::wstring & b ) noexcept
+static ::std::wstring & toUpper ( ::std::wstring & b ) noexcept
 {
     if ( b.empty ( ) )
         return b;
@@ -109,7 +109,7 @@ static __forceinline ::std::wstring & toUpper ( ::std::wstring & b ) noexcept
     return b;
 }
 
-static __forceinline ::std::wstring toUpper ( const wchar_t * b ) noexcept
+static ::std::wstring toUpper ( const wchar_t * b ) noexcept
 {
     static ::std::wstring u { };
 
@@ -121,7 +121,7 @@ static __forceinline ::std::wstring toUpper ( const wchar_t * b ) noexcept
     return u;
 }
 
-static __forceinline void toUpper ( ::std::wstring * b ) noexcept
+static void toUpper ( ::std::wstring * b ) noexcept
 {
     if ( !b || ( *b ).empty ( ) )
         return;
@@ -129,7 +129,7 @@ static __forceinline void toUpper ( ::std::wstring * b ) noexcept
     ::std::transform ( ( *b ).begin ( ), ( *b ).end ( ), ( *b ).begin ( ), ::towupper );
 }
 
-static __forceinline void toLower ( char * b ) noexcept
+static void toLower ( char * b ) noexcept
 {
     static unsigned int i { };
 
@@ -140,7 +140,7 @@ static __forceinline void toLower ( char * b ) noexcept
         b [ i ] = ::std::tolower ( b [ i ] );
 }
 
-static __forceinline void toLower ( wchar_t * b ) noexcept
+static void toLower ( wchar_t * b ) noexcept
 {
     static unsigned int i { };
 
@@ -151,7 +151,7 @@ static __forceinline void toLower ( wchar_t * b ) noexcept
         b [ i ] = ::std::towlower ( b [ i ] );
 }
 
-static __forceinline ::std::string & toLower ( ::std::string & b ) noexcept
+static ::std::string & toLower ( ::std::string & b ) noexcept
 {
     if ( b.empty ( ) )
         return b;
@@ -161,7 +161,7 @@ static __forceinline ::std::string & toLower ( ::std::string & b ) noexcept
     return b;
 }
 
-static __forceinline ::std::string toLower ( const char * b ) noexcept
+static ::std::string toLower ( const char * b ) noexcept
 {
     static ::std::string u { };
 
@@ -173,7 +173,7 @@ static __forceinline ::std::string toLower ( const char * b ) noexcept
     return u;
 }
 
-static __forceinline void toLower ( ::std::string * b ) noexcept
+static void toLower ( ::std::string * b ) noexcept
 {
     if ( !b || ( *b ).empty ( ) )
         return;
@@ -181,7 +181,7 @@ static __forceinline void toLower ( ::std::string * b ) noexcept
     ::std::transform ( ( *b ).begin ( ), ( *b ).end ( ), ( *b ).begin ( ), ::tolower );
 }
 
-static __forceinline ::std::wstring & toLower ( ::std::wstring & b ) noexcept
+static ::std::wstring & toLower ( ::std::wstring & b ) noexcept
 {
     if ( b.empty ( ) )
         return b;
@@ -191,7 +191,7 @@ static __forceinline ::std::wstring & toLower ( ::std::wstring & b ) noexcept
     return b;
 }
 
-static __forceinline ::std::wstring toLower ( const wchar_t * b ) noexcept
+static ::std::wstring toLower ( const wchar_t * b ) noexcept
 {
     static ::std::wstring u { };
 
@@ -203,7 +203,7 @@ static __forceinline ::std::wstring toLower ( const wchar_t * b ) noexcept
     return u;
 }
 
-static __forceinline void toLower ( ::std::wstring * b ) noexcept
+static void toLower ( ::std::wstring * b ) noexcept
 {
     if ( !b || ( *b ).empty ( ) )
         return;
@@ -211,7 +211,7 @@ static __forceinline void toLower ( ::std::wstring * b ) noexcept
     ::std::transform ( ( *b ).begin ( ), ( *b ).end ( ), ( *b ).begin ( ), ::towlower );
 }
 
-static __forceinline ::std::wstring toUnicode ( ::std::string i ) noexcept
+static ::std::wstring toUnicode ( ::std::string i ) noexcept
 {
     static const unsigned int u { ( ( unsigned int ) ( ::std::atoi ( XCS ( "65001" ) ) ) ), };
 
@@ -223,7 +223,7 @@ static __forceinline ::std::wstring toUnicode ( ::std::string i ) noexcept
     return r;
 }
 
-static __forceinline ::std::string fromUnicode ( ::std::wstring i ) noexcept
+static ::std::string fromUnicode ( ::std::wstring i ) noexcept
 {
     static const unsigned int u { ( ( unsigned int ) ( ::std::atoi ( XCS ( "65001" ) ) ) ), };
 
@@ -235,7 +235,7 @@ static __forceinline ::std::string fromUnicode ( ::std::wstring i ) noexcept
     return r;
 }
 
-static __forceinline ::std::string & replaceAll ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
+static ::std::string & replaceAll ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
     static unsigned int w { }, fl { }, tl { };
 
@@ -250,7 +250,7 @@ static __forceinline ::std::string & replaceAll ( ::std::string & i, ::std::stri
     return i;
 }
 
-static __forceinline ::std::wstring & replaceAll ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
+static ::std::wstring & replaceAll ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
 {
     static unsigned int w { }, fl { }, tl { };
 
@@ -265,7 +265,7 @@ static __forceinline ::std::wstring & replaceAll ( ::std::wstring & i, ::std::ws
     return i;
 }
 
-static __forceinline ::std::string & replaceOnce ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
+static ::std::string & replaceOnce ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
     static unsigned int w { };
 
@@ -278,7 +278,7 @@ static __forceinline ::std::string & replaceOnce ( ::std::string & i, ::std::str
     return i;
 }
 
-static __forceinline ::std::wstring & replaceOnce ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
+static ::std::wstring & replaceOnce ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
 {
     static unsigned int w { };
 
@@ -291,7 +291,7 @@ static __forceinline ::std::wstring & replaceOnce ( ::std::wstring & i, ::std::w
     return i;
 }
 
-static __forceinline ::std::string & eraseAll ( ::std::string & i, ::std::string f ) noexcept
+static ::std::string & eraseAll ( ::std::string & i, ::std::string f ) noexcept
 {
     static const ::std::string e { };
 
@@ -308,7 +308,7 @@ static __forceinline ::std::string & eraseAll ( ::std::string & i, ::std::string
     return i;
 }
 
-static __forceinline ::std::wstring & eraseAll ( ::std::wstring & i, ::std::wstring f ) noexcept
+static ::std::wstring & eraseAll ( ::std::wstring & i, ::std::wstring f ) noexcept
 {
     static const ::std::wstring e { };
 
@@ -325,7 +325,7 @@ static __forceinline ::std::wstring & eraseAll ( ::std::wstring & i, ::std::wstr
     return i;
 }
 
-static __forceinline ::std::string & eraseOnce ( ::std::string & i, ::std::string f ) noexcept
+static ::std::string & eraseOnce ( ::std::string & i, ::std::string f ) noexcept
 {
     static const ::std::string e { };
 
@@ -340,7 +340,7 @@ static __forceinline ::std::string & eraseOnce ( ::std::string & i, ::std::strin
     return i;
 }
 
-static __forceinline ::std::wstring & eraseOnce ( ::std::wstring & i, ::std::wstring f ) noexcept
+static ::std::wstring & eraseOnce ( ::std::wstring & i, ::std::wstring f ) noexcept
 {
     static const ::std::wstring e { };
 
@@ -355,7 +355,7 @@ static __forceinline ::std::wstring & eraseOnce ( ::std::wstring & i, ::std::wst
     return i;
 }
 
-static __forceinline ::std::string & truncateFullPathToAddFileName ( ::std::string & p ) noexcept
+static ::std::string & truncateFullPathToAddFileName ( ::std::string & p ) noexcept
 {
     static const ::std::string q { XCS ( "\\/" ), };
 
@@ -377,7 +377,7 @@ static __forceinline ::std::string & truncateFullPathToAddFileName ( ::std::stri
     return p;
 }
 
-static __forceinline ::std::wstring & truncateFullPathToAddFileName ( ::std::wstring & p ) noexcept
+static ::std::wstring & truncateFullPathToAddFileName ( ::std::wstring & p ) noexcept
 {
     static const ::std::wstring q { ::toUnicode ( XCS ( "\\/" ) ).c_str ( ), };
 
@@ -399,7 +399,7 @@ static __forceinline ::std::wstring & truncateFullPathToAddFileName ( ::std::wst
     return p;
 }
 
-static __forceinline ::std::string & replaceOneChar ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
+static ::std::string & replaceOneChar ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
     static unsigned int x { };
 
@@ -415,7 +415,7 @@ static __forceinline ::std::string & replaceOneChar ( ::std::string & i, ::std::
     return i;
 }
 
-static __forceinline ::std::wstring & replaceOneChar ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
+static ::std::wstring & replaceOneChar ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
 {
     static unsigned int x { };
 
@@ -431,7 +431,7 @@ static __forceinline ::std::wstring & replaceOneChar ( ::std::wstring & i, ::std
     return i;
 }
 
-static __forceinline ::std::string & trimBeg ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
+static ::std::string & trimBeg ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
 {
     static unsigned int p { };
 
@@ -447,7 +447,7 @@ static __forceinline ::std::string & trimBeg ( ::std::string & i, ::std::string 
     return i;
 }
 
-static __forceinline ::std::wstring & trimBeg ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
+static ::std::wstring & trimBeg ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
 {
     static unsigned int p { };
 
@@ -463,7 +463,7 @@ static __forceinline ::std::wstring & trimBeg ( ::std::wstring & i, ::std::wstri
     return i;
 }
 
-static __forceinline ::std::string & trimEnd ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
+static ::std::string & trimEnd ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
 {
     static unsigned int p { };
 
@@ -479,7 +479,7 @@ static __forceinline ::std::string & trimEnd ( ::std::string & i, ::std::string 
     return i;
 }
 
-static __forceinline ::std::wstring & trimEnd ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
+static ::std::wstring & trimEnd ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
 {
     static unsigned int p { };
 
@@ -495,7 +495,7 @@ static __forceinline ::std::wstring & trimEnd ( ::std::wstring & i, ::std::wstri
     return i;
 }
 
-static __forceinline ::std::string & trimAll ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
+static ::std::string & trimAll ( ::std::string & i, ::std::string w = XCS ( " \f\n\r\t\v" ) ) noexcept
 {
     if ( i.empty ( ) || w.empty ( ) )
         return i;
@@ -503,7 +503,7 @@ static __forceinline ::std::string & trimAll ( ::std::string & i, ::std::string 
     return trimBeg ( trimEnd ( i, w ), w );
 }
 
-static __forceinline ::std::wstring & trimAll ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
+static ::std::wstring & trimAll ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
 {
     if ( i.empty ( ) || w.empty ( ) )
         return i;
@@ -511,7 +511,7 @@ static __forceinline ::std::wstring & trimAll ( ::std::wstring & i, ::std::wstri
     return trimBeg ( trimEnd ( i, w ), w );
 }
 
-static __forceinline ::std::string & removeQuotes ( ::std::string & i, ::std::string q = XCS ( "\"'" ) ) noexcept
+static ::std::string & removeQuotes ( ::std::string & i, ::std::string q = XCS ( "\"'" ) ) noexcept
 {
     if ( i.empty ( ) || q.empty ( ) )
         return i;
@@ -519,7 +519,7 @@ static __forceinline ::std::string & removeQuotes ( ::std::string & i, ::std::st
     return trimBeg ( trimEnd ( i, q ), q );
 }
 
-static __forceinline ::std::wstring & removeQuotes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\"'" ) ).c_str ( ) ) noexcept
+static ::std::wstring & removeQuotes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\"'" ) ).c_str ( ) ) noexcept
 {
     if ( i.empty ( ) || q.empty ( ) )
         return i;
@@ -527,7 +527,7 @@ static __forceinline ::std::wstring & removeQuotes ( ::std::wstring & i, ::std::
     return trimBeg ( trimEnd ( i, q ), q );
 }
 
-static __forceinline ::std::string & removeSlashes ( ::std::string & i, ::std::string q = XCS ( "\\/" ) ) noexcept
+static ::std::string & removeSlashes ( ::std::string & i, ::std::string q = XCS ( "\\/" ) ) noexcept
 {
     if ( i.empty ( ) || q.empty ( ) )
         return i;
@@ -535,7 +535,7 @@ static __forceinline ::std::string & removeSlashes ( ::std::string & i, ::std::s
     return trimBeg ( trimEnd ( i, q ), q );
 }
 
-static __forceinline ::std::wstring & removeSlashes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\\/" ) ).c_str ( ) ) noexcept
+static ::std::wstring & removeSlashes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\\/" ) ).c_str ( ) ) noexcept
 {
     if ( i.empty ( ) || q.empty ( ) )
         return i;
@@ -543,7 +543,7 @@ static __forceinline ::std::wstring & removeSlashes ( ::std::wstring & i, ::std:
     return trimBeg ( trimEnd ( i, q ), q );
 }
 
-static __forceinline bool procRunning ( ::std::string n ) noexcept
+static bool procRunning ( ::std::string n ) noexcept
 {
     static unsigned long l [ 4096 ] { }, c { }, s { };
     static char on [ 4096 ] { };
@@ -572,7 +572,7 @@ static __forceinline bool procRunning ( ::std::string n ) noexcept
     return { };
 }
 
-static __forceinline bool procRunning ( ::std::wstring n ) noexcept
+static bool procRunning ( ::std::wstring n ) noexcept
 {
     static unsigned long l [ 4096 ] { }, c { }, s { };
     static wchar_t on [ 4096 ] { };
@@ -601,7 +601,7 @@ static __forceinline bool procRunning ( ::std::wstring n ) noexcept
     return { };
 }
 
-static __forceinline bool selfProcRunningAlready ( void ) noexcept
+static bool selfProcRunningAlready ( void ) noexcept
 {
     static unsigned long l [ 4096 ] { }, c { }, s { };
     static char sn [ 4096 ] { }, on [ 4096 ] { };
@@ -631,7 +631,7 @@ static __forceinline bool selfProcRunningAlready ( void ) noexcept
     return { };
 }
 
-static __forceinline bool selfProcRunningAlreadyUnicode ( void ) noexcept
+static bool selfProcRunningAlreadyUnicode ( void ) noexcept
 {
     static unsigned long l [ 4096 ] { }, c { }, s { };
     static wchar_t sn [ 4096 ] { }, on [ 4096 ] { };
@@ -661,7 +661,7 @@ static __forceinline bool selfProcRunningAlreadyUnicode ( void ) noexcept
     return { };
 }
 
-static __forceinline ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps ( void ) noexcept
+static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps ( void ) noexcept
 {
     static const ::std::string f { XCS ( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" ), };
 
@@ -730,7 +730,7 @@ static __forceinline ::std::vector < ::std::pair < ::std::string, ::std::string 
     return l;
 }
 
-static __forceinline ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumAppsUnicode ( void ) noexcept
+static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumAppsUnicode ( void ) noexcept
 {
     static const ::std::wstring f { ::toUnicode ( XCS ( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" ) ).c_str ( ), };
 
@@ -799,7 +799,7 @@ static __forceinline ::std::vector < ::std::pair < ::std::wstring, ::std::wstrin
     return l;
 }
 
-static __forceinline unsigned int countAppsByPartOfName ( ::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
+static unsigned int countAppsByPartOfName ( ::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
 {
     static unsigned int i { }, c { };
 
@@ -815,7 +815,7 @@ static __forceinline unsigned int countAppsByPartOfName ( ::std::string p, ::std
     return c;
 }
 
-static __forceinline unsigned int countAppsByPartOfName ( ::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
+static unsigned int countAppsByPartOfName ( ::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
 {
     static unsigned int i { }, c { };
 
@@ -831,7 +831,7 @@ static __forceinline unsigned int countAppsByPartOfName ( ::std::wstring p, ::st
     return c;
 }
 
-static __forceinline ::std::string retrieveAppVersionByPartOfName ( ::std::string p,
+static ::std::string retrieveAppVersionByPartOfName ( ::std::string p,
                                                                     ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
 {
     static unsigned int i { };
@@ -848,7 +848,7 @@ static __forceinline ::std::string retrieveAppVersionByPartOfName ( ::std::strin
     return { };
 }
 
-static __forceinline ::std::wstring retrieveAppVersionByPartOfName ( ::std::wstring p,
+static ::std::wstring retrieveAppVersionByPartOfName ( ::std::wstring p,
                                                                      ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
 {
     static unsigned int i { };
@@ -865,7 +865,7 @@ static __forceinline ::std::wstring retrieveAppVersionByPartOfName ( ::std::wstr
     return { };
 }
 
-static __forceinline ::std::string retrieveSteamUsersFilePath ( void ) noexcept
+static ::std::string retrieveSteamUsersFilePath ( void ) noexcept
 {
     static ::HKEY__ * k { };
     static char p [ 4096 ] { };
@@ -890,7 +890,7 @@ static __forceinline ::std::string retrieveSteamUsersFilePath ( void ) noexcept
     return { };
 }
 
-static __forceinline ::std::wstring retrieveSteamUsersFilePathUnicode ( void ) noexcept
+static ::std::wstring retrieveSteamUsersFilePathUnicode ( void ) noexcept
 {
     static ::HKEY__ * k { };
     static wchar_t p [ 4096 ] { };
@@ -915,7 +915,7 @@ static __forceinline ::std::wstring retrieveSteamUsersFilePathUnicode ( void ) n
     return { };
 }
 
-static __forceinline double cpuSpeed ( void ) noexcept
+static double cpuSpeed ( void ) noexcept
 {
     static const double p { ( ( double ) ( ::std::strtod ( XCS ( "1000000.0" ), nullptr ) ) ), };
     static const int f { ( ( int ) ( SE_5 ) ), };
@@ -932,7 +932,7 @@ static __forceinline double cpuSpeed ( void ) noexcept
     return ( ( ::__rdtsc ( ) - x ) << f ) / p;
 }
 
-static __forceinline void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < ::std::string > l,
+static void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < ::std::string > l,
                                             ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ), ::std::string sp = XCS ( "    " ) ) noexcept
 {
     static ::_iobuf * ff { }, * tf { };
@@ -992,7 +992,7 @@ static __forceinline void resolveLicenses ( ::std::string f, ::std::string t, ::
     ::std::fclose ( ff ), ff = nullptr, ::std::fclose ( tf ), tf = nullptr;
 }
 
-static __forceinline void resolveLicenses ( ::std::wstring f, ::std::wstring t, ::std::vector < ::std::string > l,
+static void resolveLicenses ( ::std::wstring f, ::std::wstring t, ::std::vector < ::std::string > l,
                                             ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ), ::std::string sp = XCS ( "    " ) ) noexcept
 {
     static ::_iobuf * ff { }, * tf { };
@@ -1052,7 +1052,7 @@ static __forceinline void resolveLicenses ( ::std::wstring f, ::std::wstring t, 
     ::std::fclose ( ff ), ff = nullptr, ::std::fclose ( tf ), tf = nullptr;
 }
 
-static __forceinline float elapsedSince ( long s ) noexcept
+static float elapsedSince ( long s ) noexcept
 {
     static const long p { ( ( long ) ( ::std::atoi ( XCS ( "1000" ) ) ) ), };
 
@@ -1063,7 +1063,7 @@ static __forceinline float elapsedSince ( long s ) noexcept
     return ( ( float ) ( r ) ) / p;
 }
 
-static __forceinline float retrieveWindowsVersion ( void ) noexcept
+static float retrieveWindowsVersion ( void ) noexcept
 {
     static long ( __stdcall * v ) ( ::_OSVERSIONINFOEXW * )
     {
@@ -1097,7 +1097,7 @@ static __forceinline float retrieveWindowsVersion ( void ) noexcept
     return SE_0_F;
 }
 
-static __forceinline void storeBytesToFile ( ::std::string n, ::std::vector < unsigned char > v ) noexcept
+static void storeBytesToFile ( ::std::string n, ::std::vector < unsigned char > v ) noexcept
 {
     static ::std::basic_ofstream < unsigned char, ::std::char_traits < unsigned char > > f { };
 
@@ -1109,7 +1109,7 @@ static __forceinline void storeBytesToFile ( ::std::string n, ::std::vector < un
     f.clear ( );
 }
 
-static __forceinline void storeBytesToFile ( ::std::wstring n, ::std::vector < unsigned char > v ) noexcept
+static void storeBytesToFile ( ::std::wstring n, ::std::vector < unsigned char > v ) noexcept
 {
     static ::std::basic_ofstream < unsigned char, ::std::char_traits < unsigned char > > f { };
 
@@ -1121,7 +1121,7 @@ static __forceinline void storeBytesToFile ( ::std::wstring n, ::std::vector < u
     f.clear ( );
 }
 
-static __forceinline bool isChrSlash ( long long llChr ) noexcept
+static bool isChrSlash ( long long llChr ) noexcept
 {
     static const int z { ( ( int ) ( SE_0 ) ), }, o { ( ( int ) ( SE_1 ) ), };
 
@@ -1129,7 +1129,7 @@ static __forceinline bool isChrSlash ( long long llChr ) noexcept
              ( ( bool ) ( o ) ) : ( ( bool ) ( z ) ) );
 }
 
-static __forceinline ::std::vector < unsigned char > readBinaryFileToMem ( ::std::string p ) noexcept
+static ::std::vector < unsigned char > readBinaryFileToMem ( ::std::string p ) noexcept
 {
     static ::std::vector < unsigned char > r { };
     static ::std::basic_ifstream < unsigned char, ::std::char_traits < unsigned char > > f { };
@@ -1149,7 +1149,7 @@ static __forceinline ::std::vector < unsigned char > readBinaryFileToMem ( ::std
     return r;
 }
 
-static __forceinline ::std::vector < unsigned char > readBinaryFileToMem ( ::std::wstring p ) noexcept
+static ::std::vector < unsigned char > readBinaryFileToMem ( ::std::wstring p ) noexcept
 {
     static ::std::vector < unsigned char > r { };
     static ::std::basic_ifstream < unsigned char, ::std::char_traits < unsigned char > > f { };
@@ -1169,7 +1169,7 @@ static __forceinline ::std::vector < unsigned char > readBinaryFileToMem ( ::std
     return r;
 }
 
-static __forceinline void freezeProcForMod ( unsigned long p, ::std::string n ) noexcept
+static void freezeProcForMod ( unsigned long p, ::std::string n ) noexcept
 {
     static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), };
     static ::tagMODULEENTRY32W e { };
@@ -1202,7 +1202,7 @@ static __forceinline void freezeProcForMod ( unsigned long p, ::std::string n ) 
     }
 }
 
-static __forceinline void freezeProcForMod ( unsigned long p, ::std::wstring n ) noexcept
+static void freezeProcForMod ( unsigned long p, ::std::wstring n ) noexcept
 {
     static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), };
     static ::tagMODULEENTRY32W e { };
@@ -1235,7 +1235,7 @@ static __forceinline void freezeProcForMod ( unsigned long p, ::std::wstring n )
     }
 }
 
-static __forceinline void killSteamProcs ( void ) noexcept
+static void killSteamProcs ( void ) noexcept
 {
     static const ::std::wstring p [ ] =
     {
@@ -1278,7 +1278,7 @@ static __forceinline void killSteamProcs ( void ) noexcept
     ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
 }
 
-static __forceinline unsigned long allGameModsLoaded ( void * p ) noexcept
+static unsigned long allGameModsLoaded ( void * p ) noexcept
 {
     static const ::std::wstring l [ ] =
     {
@@ -1313,7 +1313,7 @@ static __forceinline unsigned long allGameModsLoaded ( void * p ) noexcept
     return ( ( unsigned long ) ( SE_0 ) );
 }
 
-static __forceinline void ensureMzHeader ( ::std::vector < unsigned char > & v ) noexcept
+static void ensureMzHeader ( ::std::vector < unsigned char > & v ) noexcept
 {
     static unsigned int i { };
 
@@ -1329,7 +1329,7 @@ static __forceinline void ensureMzHeader ( ::std::vector < unsigned char > & v )
     }
 }
 
-static __forceinline ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u, ::std::string p, ::std::string a, ::std::string f,
+static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u, ::std::string p, ::std::string a, ::std::string f,
                                                                                long long o = SE_40 ) noexcept
 {
     static ::std::vector < unsigned char > b { };
@@ -1389,7 +1389,7 @@ static __forceinline ::std::vector < unsigned char > retrieveRemoteFileBytes ( :
     return b;
 }
 
-static __forceinline ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstring Prp ) noexcept
+static ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstring Prp ) noexcept
 {
     ::std::vector < ::std::wstring > Vec = { };
     ::IWbemLocator * Loc = { };
@@ -1515,7 +1515,7 @@ qrySysEnd:
     return Vec;
 }
 
-static __forceinline bool matchUserCompPagePhys ( ::std::string x ) noexcept
+static bool matchUserCompPagePhys ( ::std::string x ) noexcept
 {
     static const ::std::string _ { XCS ( "  " ), }, f { XCS ( "%.2f  %.2f" ), };
 
@@ -1539,7 +1539,7 @@ static __forceinline bool matchUserCompPagePhys ( ::std::string x ) noexcept
     return ( z == ( ( int ) ( b.compare ( x.c_str ( ) ) ) ) );
 }
 
-static __forceinline bool matchUserCompPagePhys ( ::std::wstring x ) noexcept
+static bool matchUserCompPagePhys ( ::std::wstring x ) noexcept
 {
     static const ::std::wstring _ { SE_UNI_C ( "  " ), }, f { SE_UNI_C ( "%.2f  %.2f" ), };
 
@@ -1563,7 +1563,7 @@ static __forceinline bool matchUserCompPagePhys ( ::std::wstring x ) noexcept
     return ( z == ( ( int ) ( b.compare ( x.c_str ( ) ) ) ) );
 }
 
-static __forceinline bool isSteamPatched ( ::std::string n ) noexcept
+static bool isSteamPatched ( ::std::string n ) noexcept
 {
     static ::HKEY__ * k { };
     static char p [ 4096 ] { };
@@ -1589,7 +1589,7 @@ static __forceinline bool isSteamPatched ( ::std::string n ) noexcept
     return ( ( bool ) ( SE_0 ) );
 }
 
-static __forceinline bool isSteamPatched ( ::std::wstring n ) noexcept
+static bool isSteamPatched ( ::std::wstring n ) noexcept
 {
     static ::HKEY__ * k { };
     static wchar_t p [ 4096 ] { };
@@ -1615,7 +1615,7 @@ static __forceinline bool isSteamPatched ( ::std::wstring n ) noexcept
     return ( ( bool ) ( SE_0 ) );
 }
 
-static __forceinline bool goodDriverSettings ( ::std::string w, ::std::string x ) noexcept
+static bool goodDriverSettings ( ::std::string w, ::std::string x ) noexcept
 {
     static ::_iobuf * f { };
     static char d [ 4096 ] { };
@@ -1660,7 +1660,7 @@ static __forceinline bool goodDriverSettings ( ::std::string w, ::std::string x 
     return ( ( bool ) ( SE_1 ) );
 }
 
-static __forceinline bool goodDriverSettings ( ::std::wstring w, ::std::wstring x ) noexcept
+static bool goodDriverSettings ( ::std::wstring w, ::std::wstring x ) noexcept
 {
     static ::_iobuf * f { };
     static wchar_t d [ 4096 ] { };
