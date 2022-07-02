@@ -26,14 +26,14 @@ static bool x64System ( ::std::string * a = nullptr, ::std::wstring * w = nullpt
     static wchar_t dw [ 4096 ] { };
     static bool r { };
 
-    r = false;
+    r = ( ( bool ) ( SE_0 ) );
 
     if ( ::GetSystemWow64DirectoryA ( da, ::std::atoi ( XCS ( "4095" ) ) ) )
     {
         if ( a )
             a->assign ( da );
 
-        r = true;
+        r = ( ( bool ) ( SE_1 ) );
     }
 
     if ( ::GetSystemWow64DirectoryW ( dw, ::std::atoi ( XCS ( "4095" ) ) ) )
@@ -41,7 +41,7 @@ static bool x64System ( ::std::string * a = nullptr, ::std::wstring * w = nullpt
         if ( w )
             w->assign ( dw );
 
-        r = true;
+        r = ( ( bool ) ( SE_1 ) );
     }
 
     return r;
@@ -218,7 +218,8 @@ static ::std::wstring toUnicode ( ::std::string i ) noexcept
     static wchar_t w [ 4096 ] { };
     static ::std::wstring r { };
 
-    ::MultiByteToWideChar ( u, SE_0, i.c_str ( ), ::std::atoi ( XCS ( "-1" ) ), w, ::std::atoi ( XCS ( "4095" ) ) ), r.assign ( w );
+    ::MultiByteToWideChar ( u, SE_0, i.c_str ( ), ::std::atoi ( XCS ( "-1" ) ), w, ::std::atoi ( XCS ( "4095" ) ) ),
+        r.assign ( w );
 
     return r;
 }
@@ -230,37 +231,38 @@ static ::std::string fromUnicode ( ::std::wstring i ) noexcept
     static char b [ 4096 ] { };
     static ::std::string r { };
 
-    ::WideCharToMultiByte ( u, SE_0, i.c_str ( ), ::std::atoi ( XCS ( "-1" ) ), b, ::std::atoi ( XCS ( "4095" ) ), nullptr, nullptr ), r.assign ( b );
+    ::WideCharToMultiByte ( u, SE_0, i.c_str ( ), ::std::atoi ( XCS ( "-1" ) ), b, ::std::atoi ( XCS ( "4095" ) ), nullptr, nullptr ),
+        r.assign ( b );
 
     return r;
 }
 
 static ::std::string & replaceAll ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
-    static unsigned int w { }, fl { }, tl { };
+    static unsigned int w { }, fl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    w = SE_0, fl = f.length ( ), tl = t.length ( );
+    fl = f.length ( );
 
-    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, t ), w += tl;
+    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.replace ( w, fl, t );
 
     return i;
 }
 
 static ::std::wstring & replaceAll ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
 {
-    static unsigned int w { }, fl { }, tl { };
+    static unsigned int w { }, fl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    w = SE_0, fl = f.length ( ), tl = t.length ( );
+    fl = f.length ( );
 
-    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, t ), w += tl;
+    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.replace ( w, fl, t );
 
     return i;
 }
@@ -293,64 +295,56 @@ static ::std::wstring & replaceOnce ( ::std::wstring & i, ::std::wstring f, ::st
 
 static ::std::string & eraseAll ( ::std::string & i, ::std::string f ) noexcept
 {
-    static const ::std::string e { };
-
     static unsigned int w { }, fl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    w = SE_0, fl = f.length ( );
+    fl = f.length ( );
 
-    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, e );
+    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.erase ( w, fl );
 
     return i;
 }
 
 static ::std::wstring & eraseAll ( ::std::wstring & i, ::std::wstring f ) noexcept
 {
-    static const ::std::wstring e { };
-
     static unsigned int w { }, fl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    w = SE_0, fl = f.length ( );
+    fl = f.length ( );
 
-    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, e );
+    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.erase ( w, fl );
 
     return i;
 }
 
 static ::std::string & eraseOnce ( ::std::string & i, ::std::string f ) noexcept
 {
-    static const ::std::string e { };
-
     static unsigned int w { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
     if ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, f.length ( ), e );
+        i.erase ( w, f.length ( ) );
 
     return i;
 }
 
 static ::std::wstring & eraseOnce ( ::std::wstring & i, ::std::wstring f ) noexcept
 {
-    static const ::std::wstring e { };
-
     static unsigned int w { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
     if ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, f.length ( ), e );
+        i.erase ( w, f.length ( ) );
 
     return i;
 }
@@ -500,7 +494,7 @@ static ::std::string & trimAll ( ::std::string & i, ::std::string w = XCS ( " \f
     if ( i.empty ( ) || w.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, w ), w );
+    return ::trimBeg ( ::trimEnd ( i, w ), w );
 }
 
 static ::std::wstring & trimAll ( ::std::wstring & i, ::std::wstring w = ::toUnicode ( XCS ( " \f\n\r\t\v" ) ).c_str ( ) ) noexcept
@@ -508,7 +502,7 @@ static ::std::wstring & trimAll ( ::std::wstring & i, ::std::wstring w = ::toUni
     if ( i.empty ( ) || w.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, w ), w );
+    return ::trimBeg ( ::trimEnd ( i, w ), w );
 }
 
 static ::std::string & removeQuotes ( ::std::string & i, ::std::string q = XCS ( "\"'" ) ) noexcept
@@ -516,7 +510,7 @@ static ::std::string & removeQuotes ( ::std::string & i, ::std::string q = XCS (
     if ( i.empty ( ) || q.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, q ), q );
+    return ::trimBeg ( ::trimEnd ( i, q ), q );
 }
 
 static ::std::wstring & removeQuotes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\"'" ) ).c_str ( ) ) noexcept
@@ -524,7 +518,7 @@ static ::std::wstring & removeQuotes ( ::std::wstring & i, ::std::wstring q = ::
     if ( i.empty ( ) || q.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, q ), q );
+    return ::trimBeg ( ::trimEnd ( i, q ), q );
 }
 
 static ::std::string & removeSlashes ( ::std::string & i, ::std::string q = XCS ( "\\/" ) ) noexcept
@@ -532,7 +526,7 @@ static ::std::string & removeSlashes ( ::std::string & i, ::std::string q = XCS 
     if ( i.empty ( ) || q.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, q ), q );
+    return ::trimBeg ( ::trimEnd ( i, q ), q );
 }
 
 static ::std::wstring & removeSlashes ( ::std::wstring & i, ::std::wstring q = ::toUnicode ( XCS ( "\\/" ) ).c_str ( ) ) noexcept
@@ -540,7 +534,7 @@ static ::std::wstring & removeSlashes ( ::std::wstring & i, ::std::wstring q = :
     if ( i.empty ( ) || q.empty ( ) )
         return i;
 
-    return trimBeg ( trimEnd ( i, q ), q );
+    return ::trimBeg ( ::trimEnd ( i, q ), q );
 }
 
 static bool procRunning ( ::std::string n ) noexcept
@@ -564,7 +558,7 @@ static bool procRunning ( ::std::string n ) noexcept
                 ::K32GetModuleBaseNameA ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
 
                 if ( ::lstrcmpiA ( on, n.c_str ( ) ) == SE_0 )
-                    return true;
+                    return ( ( bool ) ( SE_1 ) );
             }
         }
     }
@@ -593,7 +587,7 @@ static bool procRunning ( ::std::wstring n ) noexcept
                 ::K32GetModuleBaseNameW ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
 
                 if ( ::lstrcmpiW ( on, n.c_str ( ) ) == SE_0 )
-                    return true;
+                    return ( ( bool ) ( SE_1 ) );
             }
         }
     }
@@ -623,7 +617,7 @@ static bool selfProcRunningAlready ( void ) noexcept
                 ::K32GetModuleFileNameExA ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
 
                 if ( ::lstrcmpiA ( on, sn ) == SE_0 )
-                    return true;
+                    return ( ( bool ) ( SE_1 ) );
             }
         }
     }
@@ -653,7 +647,7 @@ static bool selfProcRunningAlreadyUnicode ( void ) noexcept
                 ::K32GetModuleFileNameExW ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
 
                 if ( ::lstrcmpiW ( on, sn ) == SE_0 )
-                    return true;
+                    return ( ( bool ) ( SE_1 ) );
             }
         }
     }
@@ -674,9 +668,14 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps (
     static long r { };
     static unsigned long s { };
 
-    if ( ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ) ),
-                           f.c_str ( ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &t ) != SE_0 || !t )
+    if ( ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ), f.c_str ( ),
+                           SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &t ) != SE_0 || !t )
+    {
+        if ( t )
+            ::RegCloseKey ( t ), t = nullptr;
+
         return { };
+    }
 
     for ( i = SE_0, l.clear ( ); i < ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) );
           i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
@@ -688,8 +687,8 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps (
         {
             e.assign ( f.c_str ( ) ), e.append ( XCS ( "\\" ) ), e.append ( b );
 
-            if ( ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ) ),
-                                   e.c_str ( ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &a ) != SE_0 || !a )
+            if ( ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ), e.c_str ( ),
+                                   SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &a ) != SE_0 || !a )
             {
                 if ( a )
                     ::RegCloseKey ( a ), a = nullptr;
@@ -699,7 +698,8 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps (
 
             ::std::memset ( b, SE_0, ::std::atoi ( XCS ( "4096" ) ) ), s = ::std::atoi ( XCS ( "4095" ) );
 
-            if ( ::RegQueryValueExA ( a, XCS ( "DisplayName" ), nullptr, nullptr, ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
+            if ( ::RegQueryValueExA ( a, XCS ( "DisplayName" ), nullptr, nullptr,
+                                      ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
                 p.first.assign ( b );
 
             else
@@ -707,7 +707,8 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps (
 
             ::std::memset ( b, SE_0, ::std::atoi ( XCS ( "4096" ) ) ), s = ::std::atoi ( XCS ( "4095" ) );
 
-            if ( ::RegQueryValueExA ( a, XCS ( "DisplayVersion" ), nullptr, nullptr, ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
+            if ( ::RegQueryValueExA ( a, XCS ( "DisplayVersion" ), nullptr, nullptr,
+                                      ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
                 p.second.assign ( b );
 
             else
@@ -743,9 +744,14 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     static long r { };
     static unsigned long s { };
 
-    if ( ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ) ),
-                           f.c_str ( ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &t ) != SE_0 || !t )
+    if ( ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ), f.c_str ( ),
+                           SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &t ) != SE_0 || !t )
+    {
+        if ( t )
+            ::RegCloseKey ( t ), t = nullptr;
+
         return { };
+    }
 
     for ( i = SE_0, l.clear ( ); i < ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) );
           i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
@@ -757,8 +763,8 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
         {
             e.assign ( f.c_str ( ) ), e.append ( ::toUnicode ( XCS ( "\\" ) ).c_str ( ) ), e.append ( b );
 
-            if ( ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ) ),
-                                   e.c_str ( ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &a ) != SE_0 || !a )
+            if ( ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483650" ), nullptr, SE_0 ) ) ), e.c_str ( ),
+                                   SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &a ) != SE_0 || !a )
             {
                 if ( a )
                     ::RegCloseKey ( a ), a = nullptr;
@@ -768,7 +774,8 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
 
             ::std::memset ( b, SE_0, ::std::atoi ( XCS ( "8192" ) ) ), s = ::std::atoi ( XCS ( "4095" ) );
 
-            if ( ::RegQueryValueExW ( a, ::toUnicode ( XCS ( "DisplayName" ) ).c_str ( ), nullptr, nullptr, ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
+            if ( ::RegQueryValueExW ( a, ::toUnicode ( XCS ( "DisplayName" ) ).c_str ( ), nullptr, nullptr,
+                                      ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
                 p.first.assign ( b );
 
             else
@@ -776,7 +783,8 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
 
             ::std::memset ( b, SE_0, ::std::atoi ( XCS ( "8192" ) ) ), s = ::std::atoi ( XCS ( "4095" ) );
 
-            if ( ::RegQueryValueExW ( a, ::toUnicode ( XCS ( "DisplayVersion" ) ).c_str ( ), nullptr, nullptr, ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
+            if ( ::RegQueryValueExW ( a, ::toUnicode ( XCS ( "DisplayVersion" ) ).c_str ( ), nullptr, nullptr,
+                                      ( ( unsigned char * ) ( b ) ), &s ) == SE_0 )
                 p.second.assign ( b );
 
             else
@@ -799,7 +807,8 @@ static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumApps
     return l;
 }
 
-static unsigned int countAppsByPartOfName ( ::std::string p, ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
+static unsigned int countAppsByPartOfName ( ::std::string p,
+                                            ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
 {
     static unsigned int i { }, c { };
 
@@ -815,7 +824,8 @@ static unsigned int countAppsByPartOfName ( ::std::string p, ::std::vector < ::s
     return c;
 }
 
-static unsigned int countAppsByPartOfName ( ::std::wstring p, ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
+static unsigned int countAppsByPartOfName ( ::std::wstring p,
+                                            ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
 {
     static unsigned int i { }, c { };
 
@@ -832,7 +842,7 @@ static unsigned int countAppsByPartOfName ( ::std::wstring p, ::std::vector < ::
 }
 
 static ::std::string retrieveAppVersionByPartOfName ( ::std::string p,
-                                                                    ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
+                                                      ::std::vector < ::std::pair < ::std::string, ::std::string > > l ) noexcept
 {
     static unsigned int i { };
 
@@ -849,7 +859,7 @@ static ::std::string retrieveAppVersionByPartOfName ( ::std::string p,
 }
 
 static ::std::wstring retrieveAppVersionByPartOfName ( ::std::wstring p,
-                                                                     ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
+                                                       ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l ) noexcept
 {
     static unsigned int i { };
 
@@ -872,20 +882,25 @@ static ::std::string retrieveSteamUsersFilePath ( void ) noexcept
     static unsigned long s { };
     static ::std::string f { };
 
-    if ( SE_0 == ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ) ),
-                                   XCS ( "SOFTWARE\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &k ) && k )
+    if ( SE_0 == ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ),
+                                   XCS ( "SOFTWARE\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ),
+                                   &k ) && k )
     {
         ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "4096" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ),
-            ::RegQueryValueExA ( k, XCS ( "SteamPath" ), nullptr, nullptr, ( ( unsigned char * ) ( p ) ), &s ), ::RegCloseKey ( k ), k = nullptr;
+            ::RegQueryValueExA ( k, XCS ( "SteamPath" ), nullptr, nullptr, ( ( unsigned char * ) ( p ) ), &s ),
+            ::RegCloseKey ( k ), k = nullptr;
 
         if ( ::std::strlen ( p ) > ( unsigned int ) SE_0 )
         {
-            f.assign ( p ), ::trimAll ( f ), ::removeQuotes ( f ), ::trimAll ( f ), ::replaceAll ( f, XCS ( "/" ), XCS ( "\\" ) ),
-                f.append ( XCS ( "\\config\\loginusers.vdf" ) );
+            f.assign ( p ), ::trimAll ( f ), ::removeQuotes ( f ), ::trimAll ( f ),
+                ::replaceAll ( f, XCS ( "/" ), XCS ( "\\" ) ), f.append ( XCS ( "\\config\\loginusers.vdf" ) );
 
             return f;
         }
     }
+
+    else if ( k )
+        ::RegCloseKey ( k ), k = nullptr;
 
     return { };
 }
@@ -897,20 +912,25 @@ static ::std::wstring retrieveSteamUsersFilePathUnicode ( void ) noexcept
     static unsigned long s { };
     static ::std::wstring f { };
 
-    if ( SE_0 == ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ) ),
-                                   SE_UNI_C ( "SOFTWARE\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &k ) && k )
+    if ( SE_0 == ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ),
+                                   SE_UNI_C ( "SOFTWARE\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ),
+                                   &k ) && k )
     {
         ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "8192" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ),
-            ::RegQueryValueExW ( k, SE_UNI_C ( "SteamPath" ), nullptr, nullptr, ( ( unsigned char * ) ( p ) ), &s ), ::RegCloseKey ( k ), k = nullptr;
+            ::RegQueryValueExW ( k, SE_UNI_C ( "SteamPath" ), nullptr, nullptr, ( ( unsigned char * ) ( p ) ), &s ),
+            ::RegCloseKey ( k ), k = nullptr;
 
         if ( ::std::wcslen ( p ) > ( unsigned int ) SE_0 )
         {
-            f.assign ( p ), ::trimAll ( f ), ::removeQuotes ( f ), ::trimAll ( f ), ::replaceAll ( f, SE_UNI_C ( "/" ), SE_UNI_C ( "\\" ) ),
-                f.append ( SE_UNI_C ( "\\config\\loginusers.vdf" ) );
+            f.assign ( p ), ::trimAll ( f ), ::removeQuotes ( f ), ::trimAll ( f ),
+                ::replaceAll ( f, SE_UNI_C ( "/" ), SE_UNI_C ( "\\" ) ), f.append ( SE_UNI_C ( "\\config\\loginusers.vdf" ) );
 
             return f;
         }
     }
+
+    else if ( k )
+        ::RegCloseKey ( k ), k = nullptr;
 
     return { };
 }
@@ -933,7 +953,8 @@ static double cpuSpeed ( void ) noexcept
 }
 
 static void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < ::std::string > l,
-                                            ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ), ::std::string sp = XCS ( "    " ) ) noexcept
+                              ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ),
+                              ::std::string sp = XCS ( "    " ) ) noexcept
 {
     static ::_iobuf * ff { }, * tf { };
     static char b [ 4096 ] { };
@@ -977,10 +998,11 @@ static void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < 
                 }
 
                 else
-                    r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\")," ) );
+                    r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ),
+                    r.append ( XCS ( "\")," ) );
             }
 
-            ::replaceOnce ( c, k.c_str ( ), r ), d = true;
+            ::replaceOnce ( c, k.c_str ( ), r ), d = ( ( bool ) ( SE_1 ) );
         }
 
         if ( c.find ( XCS ( "%" ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
@@ -993,7 +1015,8 @@ static void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < 
 }
 
 static void resolveLicenses ( ::std::wstring f, ::std::wstring t, ::std::vector < ::std::string > l,
-                                            ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ), ::std::string sp = XCS ( "    " ) ) noexcept
+                              ::std::string k = XCS ( "HWIDS" ), ::std::string fn = XCS ( "XS" ),
+                              ::std::string sp = XCS ( "    " ) ) noexcept
 {
     static ::_iobuf * ff { }, * tf { };
     static char b [ 4096 ] { };
@@ -1037,10 +1060,11 @@ static void resolveLicenses ( ::std::wstring f, ::std::wstring t, ::std::vector 
                 }
 
                 else
-                    r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\")," ) );
+                    r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ),
+                    r.append ( XCS ( "\")," ) );
             }
 
-            ::replaceOnce ( c, k.c_str ( ), r ), d = true;
+            ::replaceOnce ( c, k.c_str ( ), r ), d = ( ( bool ) ( SE_1 ) );
         }
 
         if ( c.find ( XCS ( "%" ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
@@ -1067,6 +1091,7 @@ static float retrieveWindowsVersion ( void ) noexcept
 {
     static long ( __stdcall * v ) ( ::_OSVERSIONINFOEXW * )
     {
+
     };
 
     static ::HINSTANCE__ * m { };
@@ -1125,7 +1150,8 @@ static bool isChrSlash ( long long llChr ) noexcept
 {
     static const int z { ( ( int ) ( SE_0 ) ), }, o { ( ( int ) ( SE_1 ) ), };
 
-    return ( ( ( llChr == ( ( long long ) ( XS ( "\\/^&*()_+" ).at ( z ) ) ) ) || ( llChr == ( ( long long ) ( XS ( "\\/~!@#$" ).at ( o ) ) ) ) ) ?
+    return ( ( ( llChr == ( ( long long ) ( XS ( "\\/^&*()_+" ).at ( z ) ) ) ) ||
+               ( llChr == ( ( long long ) ( XS ( "\\/~!@#$" ).at ( o ) ) ) ) ) ?
              ( ( bool ) ( o ) ) : ( ( bool ) ( z ) ) );
 }
 
@@ -1143,8 +1169,8 @@ static ::std::vector < unsigned char > readBinaryFileToMem ( ::std::string p ) n
         return r;
     }
 
-    f.seekg ( ( long long ) SE_0, SE_2 ), r.resize ( static_cast < unsigned int > ( f.tellg ( ) ) ), f.seekg ( ( long long ) SE_0, SE_0 ),
-        f.read ( r.data ( ), r.size ( ) ), f.close ( ), f.clear ( );
+    f.seekg ( ( long long ) SE_0, SE_2 ), r.resize ( static_cast < unsigned int > ( f.tellg ( ) ) ),
+        f.seekg ( ( long long ) SE_0, SE_0 ), f.read ( r.data ( ), r.size ( ) ), f.close ( ), f.clear ( );
 
     return r;
 }
@@ -1163,8 +1189,8 @@ static ::std::vector < unsigned char > readBinaryFileToMem ( ::std::wstring p ) 
         return r;
     }
 
-    f.seekg ( ( long long ) SE_0, SE_2 ), r.resize ( static_cast < unsigned int > ( f.tellg ( ) ) ), f.seekg ( ( long long ) SE_0, SE_0 ),
-        f.read ( r.data ( ), r.size ( ) ), f.close ( ), f.clear ( );
+    f.seekg ( ( long long ) SE_0, SE_2 ), r.resize ( static_cast < unsigned int > ( f.tellg ( ) ) ),
+        f.seekg ( ( long long ) SE_0, SE_0 ), f.read ( r.data ( ), r.size ( ) ), f.close ( ), f.clear ( );
 
     return r;
 }
@@ -1239,9 +1265,9 @@ static void killSteamProcs ( void ) noexcept
 {
     static const ::std::wstring p [ ] =
     {
-        SE_UNI ( "steam.exe" ), SE_UNI ( "steamservice.exe" ), SE_UNI ( "gameoverlayui.exe" ), SE_UNI ( "steamerrorreporter.exe" ),
-        SE_UNI ( "steamerrorreporter64.exe" ), SE_UNI ( "streaming_client.exe" ), SE_UNI ( "writeminidump.exe" ), SE_UNI ( "steamwebhelper.exe" ),
-        SE_UNI ( "csgo.exe" ),
+        SE_UNI ( "steam.exe" ), SE_UNI ( "steamservice.exe" ), SE_UNI ( "gameoverlayui.exe" ),
+        SE_UNI ( "steamerrorreporter.exe" ), SE_UNI ( "steamerrorreporter64.exe" ), SE_UNI ( "streaming_client.exe" ),
+        SE_UNI ( "writeminidump.exe" ), SE_UNI ( "steamwebhelper.exe" ), SE_UNI ( "csgo.exe" ),
     };
 
     static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), }, * w { };
@@ -1266,8 +1292,36 @@ static void killSteamProcs ( void ) noexcept
                     w = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, e.th32ProcessID );
 
                     if ( w )
-                        ::TerminateProcess ( w, SE_0 ), ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ),
+                    {
+                        if ( !::TerminateProcess ( w, SE_0 ) )
+                        {
+                            while ( SE_1 )
+                            {
+                                ::Sleep ( SE_1 );
+
+                                if ( ::TerminateProcess ( w, SE_0 ) )
+                                    break;
+                            }
+                        }
+
+                        if ( ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ) )
+                        {
+                            while ( SE_1 )
+                            {
+                                ::Sleep ( SE_1 );
+
+                                if ( !::TerminateProcess ( w, SE_0 ) )
+                                    continue;
+
+                                if ( ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ) )
+                                    continue;
+
+                                break;
+                            }
+                        }
+
                         ::CloseHandle ( w ), i = SE_32;
+                    }
                 }
             }
         }
@@ -1330,7 +1384,7 @@ static void ensureMzHeader ( ::std::vector < unsigned char > & v ) noexcept
 }
 
 static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u, ::std::string p, ::std::string a, ::std::string f,
-                                                                               long long o = SE_40 ) noexcept
+                                                                 long long o = SE_40 ) noexcept
 {
     static ::std::vector < unsigned char > b { };
     static unsigned int s { };
@@ -1340,16 +1394,16 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u
     static ::timeval t { };
     static ::fd_set x { };
     static long long m { };
+    static ::sockaddr_in v { };
 
     b.clear ( ), w = ::gethostbyname ( u.c_str ( ) );
 
     if ( !w )
         return b;
 
-    ::sockaddr_in v { };
-
-    s = ::socket ( SE_2, SE_1, SE_6 ), v.sin_family = SE_2, ::std::memcpy ( &v.sin_addr, w->h_addr_list [ SE_0 ], w->h_length ),
-        v.sin_port = ::htons ( ::std::atoi ( p.c_str ( ) ) ), r = ::connect ( s, ( ::sockaddr * ) &v, SE_16 );
+    ::std::memset ( &v, SE_0, SE_16 ), s = ::socket ( SE_2, SE_1, SE_6 ), v.sin_family = SE_2,
+        ::std::memcpy ( &v.sin_addr, w->h_addr_list [ SE_0 ], w->h_length ), v.sin_port = ::htons ( ::std::atoi ( p.c_str ( ) ) ),
+        r = ::connect ( s, ( ::sockaddr * ) &v, SE_16 );
 
     if ( r == ( ( int ) ( ::std::atof ( XCS ( "-1.00000" ) ) ) ) )
     {
@@ -1358,7 +1412,8 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u
         return b;
     }
 
-    r = ::sprintf_s ( q, XCS ( "GET %s HTTP/%s\r\nHost: %s\r\n\r\n" ), f.c_str ( ), a.c_str ( ), u.c_str ( ) ), r = ::send ( s, q, r, SE_0 );
+    r = ::sprintf_s ( q, XCS ( "GET %s HTTP/%s\r\nHost: %s\r\n\r\n" ), f.c_str ( ), a.c_str ( ), u.c_str ( ) ),
+        r = ::send ( s, q, r, SE_0 );
 
     if ( r == ( ( int ) ( ::std::atof ( XCS ( "-1.00000" ) ) ) ) )
     {
@@ -1371,14 +1426,15 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u
 
     while ( SE_1 )
     {
-        ::Sleep ( SE_1 ), t.tv_sec = SE_0, t.tv_usec = SE_25, ::std::memset ( &x, SE_0, ( ( unsigned int ) ( ::std::atof ( XCS ( "260.00000" ) ) ) ) ),
+        ::Sleep ( SE_1 ), t.tv_sec = SE_0, t.tv_usec = SE_25,
+            ::std::memset ( &x, SE_0, ( ( unsigned int ) ( ::std::atof ( XCS ( "260.00000" ) ) ) ) ),
             ( &x )->fd_count = SE_1, ( &x )->fd_array [ SE_0 ] = s;
 
         if ( ( ( ::select ( s + SE_1, &x, nullptr, nullptr, &t ) ) > SE_0 ) || ( ( ::std::time ( nullptr ) - m ) > o ) )
             break;
     }
 
-    while ( ( r = ::recv ( s, c, ( ( int ) ( ::std::atof ( XCS ( "8192.00000" ) ) ) ), SE_0 ) ) > SE_0 )
+    while ( ( r = ::recv ( s, c, ( ( int ) ( ::std::atof ( XCS ( "8191.00000" ) ) ) ), SE_0 ) ) > SE_0 )
     {
         for ( i = SE_0; i < r; i = ( i + SE_1 ) )
             b.emplace_back ( ( ( unsigned char ) ( c [ i ] ) ) );
@@ -1389,128 +1445,65 @@ static ::std::vector < unsigned char > retrieveRemoteFileBytes ( ::std::string u
     return b;
 }
 
-static ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstring Prp ) noexcept
+static ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstring Key ) noexcept
 {
-    ::std::vector < ::std::wstring > Vec = { };
-    ::IWbemLocator * Loc = { };
-    ::IWbemServices * Svc = { };
-    ::IWbemClassObject * Cls = { };
-    ::IEnumWbemClassObject * Enm = { };
-    ::tagVARIANT Var = { };
-    long Res = { };
-    wchar_t * Srv = { }, * Lng = { }, * Str = { };
-    unsigned long Val = { };
+    static ::std::vector < ::std::wstring > Vec { };
+    static ::IWbemLocator * Loc { };
+    static ::IWbemServices * Svc { };
+    static ::IWbemClassObject * Obj { };
+    static ::IEnumWbemClassObject * Enm { };
+    static ::tagVARIANT Var { };
+    static wchar_t * Res { }, * Lng { }, * Str { };
+    static unsigned long _ { SE_0, };
 
-    Res = ::CoInitializeEx ( { }, SE_0 );
+    Vec.clear ( ), Vec = { };
 
-    if ( Res < SE_0 )
-    {
+    if ( Qry.empty ( ) || Key.empty ( ) || ::CoInitializeEx ( { }, SE_0 ) ||
+         ::CoInitializeSecurity ( { }, ( ( long ) ( ::std::atof ( XCS ( "-1.0000" ) ) ) ), { }, { }, SE_0, SE_3, { }, SE_0, { } ) ||
+         ::CoCreateInstance ( ::CLSID_WbemLocator, { }, SE_1, ::IID_IWbemLocator, ( void ** ) &Loc ) || !Loc ||
+         !( Res = ::SysAllocString ( SE_UNI_C ( "ROOT\\CIMV2" ) ) ) || Loc->ConnectServer ( Res, { }, { }, { }, SE_0, { }, { }, &Svc ) ||
+         !Svc || !( Lng = ::SysAllocString ( SE_UNI_C ( "WQL" ) ) ) || !( Str = ::SysAllocString ( Qry.c_str ( ) ) ) ||
+         Svc->ExecQuery ( Lng, Str, SE_0, { }, &Enm ) || !Enm )
         goto qrySysEnd;
-    }
 
-    Res = ::CoInitializeSecurity ( { }, ( ( long ) ( ::std::atof ( XCS ( "-1.0000" ) ) ) ), { }, { }, SE_0, SE_3, { }, SE_0, { } );
+    _ = SE_0;
 
-    if ( Res < SE_0 )
+    while ( !Enm->Next ( ( ( long ) ( ::std::atof ( XCS ( "-1.0000" ) ) ) ), SE_1, &Obj, &_ ) )
     {
-        goto qrySysEnd;
-    }
-
-    Res = ::CoCreateInstance ( ::CLSID_WbemLocator, { }, SE_1, ::IID_IWbemLocator, ( void ** ) &Loc );
-
-    if ( Res < SE_0 )
-    {
-        goto qrySysEnd;
-    }
-
-    Srv = ::SysAllocString ( SE_UNI_C ( "ROOT\\CIMV2" ) );
-
-    if ( !Srv )
-    {
-        goto qrySysEnd;
-    }
-
-    Res = Loc->ConnectServer ( Srv, { }, { }, { }, SE_0, { }, { }, &Svc ), ::SysFreeString ( Srv );
-
-    if ( Res < SE_0 )
-    {
-        goto qrySysEnd;
-    }
-
-    Res = ::CoSetProxyBlanket ( Svc, SE_10, SE_0, { }, SE_3, SE_3, { }, SE_0 );
-
-    if ( Res < SE_0 )
-    {
-        goto qrySysEnd;
-    }
-
-    Lng = ::SysAllocString ( SE_UNI_C ( "WQL" ) );
-
-    if ( !Lng )
-    {
-        goto qrySysEnd;
-    }
-
-    Str = ::SysAllocString ( Qry.c_str ( ) );
-
-    if ( !Str )
-    {
-        goto qrySysEnd;
-    }
-
-    Res = Svc->ExecQuery ( Lng, Str, ( ( long ) ( ::std::atof ( XCS ( "48.0000" ) ) ) ), { }, &Enm ), ::SysFreeString ( Lng ), ::SysFreeString ( Str );
-
-    if ( Res < SE_0 )
-    {
-        goto qrySysEnd;
-    }
-
-    while ( Enm )
-    {
-        Res = Enm->Next ( ( ( long ) ( ::std::atof ( XCS ( "-1.00000" ) ) ) ), SE_1, &Cls, &Val );
-
-        if ( !Val )
+        if ( Obj )
         {
-            goto qrySysEnd;
+            Obj->Get ( Key.c_str ( ), SE_0, &Var, { }, { } );
+            ::std::wstring Val ( Var.bstrVal, ::SysStringLen ( Var.bstrVal ) );
+            Vec.emplace_back ( Val ), ::VariantClear ( &Var ), Var = { }, Obj->Release ( ), Obj = { };
         }
 
-        Res = Cls->Get ( Prp.c_str ( ), SE_0, &Var, { }, { } );
-
-        if ( Res )
-        {
-            goto qrySysEnd;
-        }
-
-        if ( Var.bstrVal )
-        {
-            Vec.emplace_back ( Var.bstrVal );
-        }
+        _ = SE_0;
     }
 
 qrySysEnd:
 
-    ::VariantClear ( &Var );
-
-    if ( Cls )
-    {
-        Cls->Release ( );
-    }
+    if ( Obj )
+        Obj->Release ( ), Obj = { };
 
     if ( Svc )
-    {
-        Svc->Release ( );
-    }
+        Svc->Release ( ), Svc = { };
 
     if ( Loc )
-    {
-        Loc->Release ( );
-    }
+        Loc->Release ( ), Loc = { };
 
     if ( Enm )
-    {
-        Enm->Release ( );
-    }
+        Enm->Release ( ), Enm = { };
 
-    ::CoUninitialize ( );
+    if ( Str )
+        ::SysFreeString ( Str ), Str = { };
+
+    if ( Lng )
+        ::SysFreeString ( Lng ), Lng = { };
+
+    if ( Res )
+        ::SysFreeString ( Res ), Res = { };
+
+    ::VariantClear ( &Var ), Var = { }, ::CoUninitialize ( );
 
     return Vec;
 }
@@ -1570,14 +1563,17 @@ static bool isSteamPatched ( ::std::string n ) noexcept
     static unsigned long s { }, t { };
     static ::std::string w { };
 
-    if ( SE_0 == ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ) ),
-                                   XCS ( "Software\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &k ) && k )
+    if ( SE_0 == ::RegOpenKeyExA ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ),
+                                   XCS ( "Software\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ),
+                                   &k ) && k )
     {
-        ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "4096" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ), t = ( ( unsigned long ) ( SE_1 ) );
+        ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "4096" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ),
+            t = ( ( unsigned long ) ( SE_1 ) );
 
         if ( SE_0 == ::RegQueryValueExA ( k, XCS ( "SteamExe" ), nullptr, &t, ( ( unsigned char * ) ( p ) ), &s ) )
         {
-            w.assign ( p ), ::toLower ( w ), ::replaceOnce ( w, XCS ( "steam.exe" ), n.c_str ( ) ), ::RegCloseKey ( k ), k = nullptr;
+            w.assign ( p ), ::toLower ( w ), ::replaceOnce ( w, XCS ( "steam.exe" ), n.c_str ( ) ), ::RegCloseKey ( k ),
+                k = nullptr;
 
             return ::std::filesystem::exists ( w.c_str ( ) ) ? SE_1 : SE_0;
         }
@@ -1585,6 +1581,9 @@ static bool isSteamPatched ( ::std::string n ) noexcept
         else
             ::RegCloseKey ( k ), k = nullptr;
     }
+
+    else if ( k )
+        ::RegCloseKey ( k ), k = nullptr;
 
     return ( ( bool ) ( SE_0 ) );
 }
@@ -1596,14 +1595,17 @@ static bool isSteamPatched ( ::std::wstring n ) noexcept
     static unsigned long s { }, t { };
     static ::std::wstring w { };
 
-    if ( SE_0 == ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( unsigned long ) ( ( long ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ) ),
-                                   SE_UNI_C ( "Software\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ), &k ) && k )
+    if ( SE_0 == ::RegOpenKeyExW ( ( ( ::HKEY__ * ) ( ::std::strtoull ( XCS ( "2147483649" ), nullptr, SE_0 ) ) ),
+                                   SE_UNI_C ( "Software\\Valve\\Steam" ), SE_0, ::std::strtoul ( XCS ( "983103" ), nullptr, SE_0 ),
+                                   &k ) && k )
     {
-        ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "8192" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ), t = ( ( unsigned long ) ( SE_1 ) );
+        ::std::memset ( p, SE_0, ::std::atoi ( XCS ( "8192" ) ) ), s = ::std::atoi ( XCS ( "4095" ) ),
+            t = ( ( unsigned long ) ( SE_1 ) );
 
         if ( SE_0 == ::RegQueryValueExW ( k, SE_UNI_C ( "SteamExe" ), nullptr, &t, ( ( unsigned char * ) ( p ) ), &s ) )
         {
-            w.assign ( p ), ::toLower ( w ), ::replaceOnce ( w, SE_UNI_C ( "steam.exe" ), n.c_str ( ) ), ::RegCloseKey ( k ), k = nullptr;
+            w.assign ( p ), ::toLower ( w ), ::replaceOnce ( w, SE_UNI_C ( "steam.exe" ), n.c_str ( ) ), ::RegCloseKey ( k ),
+                k = nullptr;
 
             return ::std::filesystem::exists ( w.c_str ( ) ) ? SE_1 : SE_0;
         }
@@ -1611,6 +1613,9 @@ static bool isSteamPatched ( ::std::wstring n ) noexcept
         else
             ::RegCloseKey ( k ), k = nullptr;
     }
+
+    else if ( k )
+        ::RegCloseKey ( k ), k = nullptr;
 
     return ( ( bool ) ( SE_0 ) );
 }
