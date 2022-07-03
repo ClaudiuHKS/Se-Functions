@@ -1454,7 +1454,7 @@ static ::std::vector < ::std::wstring > qrySys ( ::std::wstring Qry, ::std::wstr
     static ::IEnumWbemClassObject * Enm { };
     static ::tagVARIANT Var { };
     static wchar_t * Res { }, * Lng { }, * Str { };
-    static unsigned long _ { SE_0, };
+    static unsigned long _ { ( ( unsigned long ) ( SE_0 ) ), };
 
     Vec.clear ( ), Vec = { };
 
