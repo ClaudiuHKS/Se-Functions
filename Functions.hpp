@@ -237,6 +237,44 @@ static ::std::string fromUnicode ( ::std::wstring i ) noexcept
     return r;
 }
 
+static ::std::string invSlashes ( ::std::string _ ) noexcept
+{
+    static const ::std::string s { XCS ( "\\/" ), };
+
+    if ( _.empty ( ) )
+        return _;
+
+    for ( auto & Ch : _ )
+    {
+        if ( Ch == s.at ( SE_0 ) )
+            Ch = s.at ( SE_1 );
+
+        else if ( Ch == s.at ( SE_1 ) )
+            Ch = s.at ( SE_0 );
+    }
+
+    return _;
+}
+
+static ::std::wstring invSlashes ( ::std::wstring _ ) noexcept
+{
+    static const ::std::wstring s { SE_UNI_C ( "\\/" ), };
+
+    if ( _.empty ( ) )
+        return _;
+
+    for ( auto & Ch : _ )
+    {
+        if ( Ch == s.at ( SE_0 ) )
+            Ch = s.at ( SE_1 );
+
+        else if ( Ch == s.at ( SE_1 ) )
+            Ch = s.at ( SE_0 );
+    }
+
+    return _;
+}
+
 static ::std::string & replaceAll ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
     static unsigned int w { }, fl { }, tl { };
@@ -539,7 +577,7 @@ static ::std::wstring & removeSlashes ( ::std::wstring & i, ::std::wstring q = :
 
 static bool procRunning ( ::std::string n ) noexcept
 {
-    static unsigned long l [ 4096 ] { }, c { }, s { };
+    static unsigned long l [ 4096 ] { }, c { }, s { }, x { };
     static char on [ 4096 ] { };
     static void * p { };
     static unsigned int i { };
@@ -547,17 +585,20 @@ static bool procRunning ( ::std::string n ) noexcept
     if ( n.empty ( ) || SE_0 == ::K32EnumProcesses ( l, ::std::atoi ( XCS ( "16384" ) ), &c ) )
         return { };
 
-    for ( i = SE_0, s = ::GetCurrentProcessId ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
+    ::toLower ( n );
+
+    for ( i = SE_0, s = ::GetCurrentProcessId ( ), x = ::_getpid ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
     {
-        if ( l [ i ] != SE_0 && l [ i ] != s )
+        if ( l [ i ] != SE_0 && l [ i ] != s && l [ i ] != x )
         {
             p = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, l [ i ] );
 
             if ( p )
             {
-                ::K32GetModuleBaseNameA ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
+                ::K32GetModuleFileNameExA ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr,
+                    ::toLower ( on );
 
-                if ( ::lstrcmpiA ( on, n.c_str ( ) ) == SE_0 )
+                if ( ::std::strstr ( on, n.c_str ( ) ) || ::std::strstr ( on, ::invSlashes ( n ).c_str ( ) ) )
                     return ( ( bool ) ( SE_1 ) );
             }
         }
@@ -568,7 +609,7 @@ static bool procRunning ( ::std::string n ) noexcept
 
 static bool procRunning ( ::std::wstring n ) noexcept
 {
-    static unsigned long l [ 4096 ] { }, c { }, s { };
+    static unsigned long l [ 4096 ] { }, c { }, s { }, x { };
     static wchar_t on [ 4096 ] { };
     static void * p { };
     static unsigned int i { };
@@ -576,17 +617,20 @@ static bool procRunning ( ::std::wstring n ) noexcept
     if ( n.empty ( ) || SE_0 == ::K32EnumProcesses ( l, ::std::atoi ( XCS ( "16384" ) ), &c ) )
         return { };
 
-    for ( i = SE_0, s = ::GetCurrentProcessId ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
+    ::toLower ( n );
+
+    for ( i = SE_0, s = ::GetCurrentProcessId ( ), x = ::_getpid ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
     {
-        if ( l [ i ] != SE_0 && l [ i ] != s )
+        if ( l [ i ] != SE_0 && l [ i ] != s && l [ i ] != x )
         {
             p = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, l [ i ] );
 
             if ( p )
             {
-                ::K32GetModuleBaseNameW ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr;
+                ::K32GetModuleFileNameExW ( p, nullptr, on, ::std::atoi ( XCS ( "4095" ) ) ), ::CloseHandle ( p ), p = nullptr,
+                    ::toLower ( on );
 
-                if ( ::lstrcmpiW ( on, n.c_str ( ) ) == SE_0 )
+                if ( ::std::wcsstr ( on, n.c_str ( ) ) || ::std::wcsstr ( on, ::invSlashes ( n ).c_str ( ) ) )
                     return ( ( bool ) ( SE_1 ) );
             }
         }
@@ -597,7 +641,7 @@ static bool procRunning ( ::std::wstring n ) noexcept
 
 static bool selfProcRunningAlready ( void ) noexcept
 {
-    static unsigned long l [ 4096 ] { }, c { }, s { };
+    static unsigned long l [ 4096 ] { }, c { }, s { }, x { };
     static char sn [ 4096 ] { }, on [ 4096 ] { };
     static void * p { };
     static unsigned int i { };
@@ -606,9 +650,9 @@ static bool selfProcRunningAlready ( void ) noexcept
          SE_0 == ::K32EnumProcesses ( l, ::std::atoi ( XCS ( "16384" ) ), &c ) )
         return { };
 
-    for ( i = SE_0, s = ::GetCurrentProcessId ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
+    for ( i = SE_0, s = ::GetCurrentProcessId ( ), x = ::_getpid ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
     {
-        if ( l [ i ] != SE_0 && l [ i ] != s )
+        if ( l [ i ] != SE_0 && l [ i ] != s && l [ i ] != x )
         {
             p = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, l [ i ] );
 
@@ -627,7 +671,7 @@ static bool selfProcRunningAlready ( void ) noexcept
 
 static bool selfProcRunningAlreadyUnicode ( void ) noexcept
 {
-    static unsigned long l [ 4096 ] { }, c { }, s { };
+    static unsigned long l [ 4096 ] { }, c { }, s { }, x { };
     static wchar_t sn [ 4096 ] { }, on [ 4096 ] { };
     static void * p { };
     static unsigned int i { };
@@ -636,9 +680,9 @@ static bool selfProcRunningAlreadyUnicode ( void ) noexcept
          SE_0 == ::K32EnumProcesses ( l, ::std::atoi ( XCS ( "16384" ) ), &c ) )
         return { };
 
-    for ( i = SE_0, s = ::GetCurrentProcessId ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
+    for ( i = SE_0, s = ::GetCurrentProcessId ( ), x = ::_getpid ( ); i < ( c / SE_4 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
     {
-        if ( l [ i ] != SE_0 && l [ i ] != s )
+        if ( l [ i ] != SE_0 && l [ i ] != s && l [ i ] != x )
         {
             p = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, l [ i ] );
 
@@ -657,7 +701,7 @@ static bool selfProcRunningAlreadyUnicode ( void ) noexcept
 
 static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps ( void ) noexcept
 {
-    static const ::std::string f { XCS ( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" ), };
+    static const ::std::string f { XCS ( "software\\microsoft\\windows\\currentversion\\uninstall" ), };
 
     static ::HKEY__ * t { }, * a { };
     static ::std::vector < ::std::pair < ::std::string, ::std::string > > l { };
@@ -733,7 +777,7 @@ static ::std::vector < ::std::pair < ::std::string, ::std::string > > enumApps (
 
 static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > enumAppsUnicode ( void ) noexcept
 {
-    static const ::std::wstring f { ::toUnicode ( XCS ( "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall" ) ).c_str ( ), };
+    static const ::std::wstring f { ::toUnicode ( XCS ( "software\\microsoft\\windows\\currentversion\\uninstall" ) ).c_str ( ), };
 
     static ::HKEY__ * t { }, * a { };
     static ::std::vector < ::std::pair < ::std::wstring, ::std::wstring > > l { };
@@ -1197,14 +1241,14 @@ static ::std::vector < unsigned char > readBinaryFileToMem ( ::std::wstring p ) 
 
 static void freezeProcForMod ( unsigned long p, ::std::string n ) noexcept
 {
-    static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), };
+    static void * s { ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ), };
     static ::tagMODULEENTRY32W e { };
 
     while ( SE_1 )
     {
         s = ::CreateToolhelp32Snapshot ( SE_8, p );
 
-        while ( s == ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ) )
+        while ( s == ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ) )
             s = ::CreateToolhelp32Snapshot ( SE_8, p );
 
         ::std::memset ( &e, SE_0, ::std::atoi ( XCS ( "1064" ) ) ), e.dwSize = ::std::atoi ( XCS ( "1064" ) );
@@ -1215,7 +1259,7 @@ static void freezeProcForMod ( unsigned long p, ::std::string n ) noexcept
             {
                 if ( SE_0 == ::lstrcmpiW ( e.szModule, ::toUnicode ( n.c_str ( ) ).c_str ( ) ) )
                 {
-                    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
+                    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) );
 
                     return;
                 }
@@ -1224,20 +1268,20 @@ static void freezeProcForMod ( unsigned long p, ::std::string n ) noexcept
             while ( ::Module32NextW ( s, &e ) );
         }
 
-        ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
+        ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) );
     }
 }
 
 static void freezeProcForMod ( unsigned long p, ::std::wstring n ) noexcept
 {
-    static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), };
+    static void * s { ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ), };
     static ::tagMODULEENTRY32W e { };
 
     while ( SE_1 )
     {
         s = ::CreateToolhelp32Snapshot ( SE_8, p );
 
-        while ( s == ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ) )
+        while ( s == ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ) )
             s = ::CreateToolhelp32Snapshot ( SE_8, p );
 
         ::std::memset ( &e, SE_0, ::std::atoi ( XCS ( "1064" ) ) ), e.dwSize = ::std::atoi ( XCS ( "1064" ) );
@@ -1248,7 +1292,7 @@ static void freezeProcForMod ( unsigned long p, ::std::wstring n ) noexcept
             {
                 if ( SE_0 == ::lstrcmpiW ( e.szModule, n.c_str ( ) ) )
                 {
-                    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
+                    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) );
 
                     return;
                 }
@@ -1257,7 +1301,7 @@ static void freezeProcForMod ( unsigned long p, ::std::wstring n ) noexcept
             while ( ::Module32NextW ( s, &e ) );
         }
 
-        ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
+        ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) );
     }
 }
 
@@ -1270,13 +1314,13 @@ static void killSteamProcs ( void ) noexcept
         SE_UNI ( "writeminidump.exe" ), SE_UNI ( "steamwebhelper.exe" ), SE_UNI ( "csgo.exe" ),
     };
 
-    static void * s { ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ), }, * w { };
+    static void * s { ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ), }, * w { };
     static ::tagPROCESSENTRY32W e { };
     static unsigned int i { };
 
     s = ::CreateToolhelp32Snapshot ( SE_2, SE_0 );
 
-    while ( s == ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) ) )
+    while ( s == ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) ) )
         s = ::CreateToolhelp32Snapshot ( SE_2, SE_0 );
 
     ::std::memset ( &e, SE_0, ::std::atoi ( XCS ( "556" ) ) ), e.dwSize = ::std::atoi ( XCS ( "556" ) );
@@ -1287,40 +1331,37 @@ static void killSteamProcs ( void ) noexcept
         {
             for ( i = SE_0; i < ( ( unsigned int ) ( SE_9 ) ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
             {
-                if ( SE_0 == ::lstrcmpiW ( e.szExeFile, p [ i ].c_str ( ) ) )
+                if ( SE_0 == ::lstrcmpiW ( e.szExeFile, p [ i ].c_str ( ) ) && e.th32ProcessID != SE_0 && e.th32ProcessID != ::_getpid ( ) )
                 {
-                    w = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, e.th32ProcessID );
-
-                    if ( w )
+                    if ( ( w = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, e.th32ProcessID ) ) )
                     {
-                        if ( !::TerminateProcess ( w, SE_0 ) )
+                        if ( SE_0 == ( ( ::TerminateProcess ( w, SE_0 ) ) &&
+                                       !( ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) ) )
                         {
-                            while ( SE_1 )
-                            {
-                                ::Sleep ( SE_1 );
+                            ::Sleep ( SE_1 );
 
-                                if ( ::TerminateProcess ( w, SE_0 ) )
-                                    break;
+                            ::CloseHandle ( w ), w = nullptr;
+
+                            while ( ::procRunning ( p [ i ].c_str ( ) ) )
+                            {
+                                w = ::OpenProcess ( ::std::strtoul ( XCS ( "2097151" ), nullptr, SE_0 ), SE_0, e.th32ProcessID );
+
+                                if ( w )
+                                {
+                                    if ( ::TerminateProcess ( w, SE_0 ) != SE_0 )
+                                        ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) );
+
+                                    ::CloseHandle ( w ), w = nullptr;
+                                }
+
+                                ::Sleep ( SE_1 );
                             }
                         }
 
-                        if ( ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ) )
-                        {
-                            while ( SE_1 )
-                            {
-                                ::Sleep ( SE_1 );
+                        if ( w )
+                            ::CloseHandle ( w ), w = nullptr;
 
-                                if ( !::TerminateProcess ( w, SE_0 ) )
-                                    continue;
-
-                                if ( ::WaitForSingleObject ( w, ::std::strtoul ( XCS ( "4294967295" ), nullptr, SE_0 ) ) )
-                                    continue;
-
-                                break;
-                            }
-                        }
-
-                        ::CloseHandle ( w ), i = SE_32;
+                        i = SE_32;
                     }
                 }
             }
@@ -1329,7 +1370,7 @@ static void killSteamProcs ( void ) noexcept
         while ( ::Process32NextW ( s, &e ) );
     }
 
-    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long )::std::atof ( XCS ( "-1.00000" ) ) );
+    ::CloseHandle ( s ), s = ( ( void * ) ( unsigned long ) ::std::atof ( XCS ( "-1.00000" ) ) );
 }
 
 static unsigned long allGameModsLoaded ( void * p ) noexcept
@@ -1369,16 +1410,19 @@ static unsigned long allGameModsLoaded ( void * p ) noexcept
 
 static void ensureMzHeader ( ::std::vector < unsigned char > & v ) noexcept
 {
-    static unsigned int i { };
+    static unsigned int i { }, s { };
 
-    for ( i = ( ( unsigned int ) ( SE_0 ) ); i < v.size ( ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
+    if ( ( s = v.size ( ) ) > ( ( unsigned int ) ( SE_32 ) ) )
     {
-        if ( ( v [ i ] == SE_10 || v [ i ] == SE_13 ) && v [ i + SE_1 ] == ( ( int ) ( ::std::atof ( XCS ( "77.00000" ) ) ) ) &&
-             v [ i + SE_2 ] == ( ( int ) ( ::std::atof ( XCS ( "90.00000" ) ) ) ) )
+        for ( i = ( ( unsigned int ) ( SE_0 ) ); i < ( s - SE_8 ); i = ( i + ( ( unsigned int ) ( SE_1 ) ) ) )
         {
-            v.erase ( v.cbegin ( ), ( v.cbegin ( ) + i + SE_1 ) );
+            if ( ( v [ i ] == SE_10 || v [ i ] == SE_13 ) && v [ i + SE_1 ] == ( ( int ) ( ::std::atof ( XCS ( "77.00000" ) ) ) ) &&
+                 v [ i + SE_2 ] == ( ( int ) ( ::std::atof ( XCS ( "90.00000" ) ) ) ) )
+            {
+                v.erase ( v.cbegin ( ), ( v.cbegin ( ) + i + SE_1 ) );
 
-            break;
+                break;
+            }
         }
     }
 }
