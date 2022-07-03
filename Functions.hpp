@@ -990,11 +990,11 @@ static void resolveLicenses ( ::std::string f, ::std::string t, ::std::vector < 
                 if ( i != ( s - SE_1 ) )
                 {
                     if ( i == SE_0 )
-                        r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\"), \\\n" ) );
+                        r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\"),\n" ) );
 
                     else
                         r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ),
-                        r.append ( XCS ( "\"), \\\n" ) );
+                        r.append ( XCS ( "\"),\n" ) );
                 }
 
                 else
@@ -1052,11 +1052,11 @@ static void resolveLicenses ( ::std::wstring f, ::std::wstring t, ::std::vector 
                 if ( i != ( s - SE_1 ) )
                 {
                     if ( i == SE_0 )
-                        r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\"), \\\n" ) );
+                        r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ), r.append ( XCS ( "\"),\n" ) );
 
                     else
                         r.append ( sp.c_str ( ) ), r.append ( fn.c_str ( ) ), r.append ( XCS ( "(\"" ) ), r.append ( l [ i ] ),
-                        r.append ( XCS ( "\"), \\\n" ) );
+                        r.append ( XCS ( "\"),\n" ) );
                 }
 
                 else
