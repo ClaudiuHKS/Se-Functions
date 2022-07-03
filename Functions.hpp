@@ -239,30 +239,30 @@ static ::std::string fromUnicode ( ::std::wstring i ) noexcept
 
 static ::std::string & replaceAll ( ::std::string & i, ::std::string f, ::std::string t ) noexcept
 {
-    static unsigned int w { }, fl { };
+    static unsigned int w { }, fl { }, tl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    fl = f.length ( );
+    w = ( ( unsigned int ) ( SE_0 ) ), fl = f.length ( ), tl = t.length ( );
 
-    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, t );
+    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.replace ( w, fl, t ), w += tl;
 
     return i;
 }
 
 static ::std::wstring & replaceAll ( ::std::wstring & i, ::std::wstring f, ::std::wstring t ) noexcept
 {
-    static unsigned int w { }, fl { };
+    static unsigned int w { }, fl { }, tl { };
 
     if ( i.empty ( ) || f.empty ( ) )
         return i;
 
-    fl = f.length ( );
+    w = ( ( unsigned int ) ( SE_0 ) ), fl = f.length ( ), tl = t.length ( );
 
-    while ( ( w = i.find ( f ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
-        i.replace ( w, fl, t );
+    while ( ( w = i.find ( f, w ) ) != ( ( unsigned int ) ( ::std::strtoull ( XCS ( "4294967295" ), nullptr, SE_0 ) ) ) )
+        i.replace ( w, fl, t ), w += tl;
 
     return i;
 }
