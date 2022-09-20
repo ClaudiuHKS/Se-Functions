@@ -258,7 +258,7 @@ static ::std::string invSlashes(::std::string _) noexcept
 
 static ::std::wstring invSlashes(::std::wstring _) noexcept
 {
-    static const ::std::wstring s{ SE_UNI_C("\\/"), };
+    static const ::std::wstring s{ XCWS("\\/"), };
 
     if (_.empty())
         return _;
@@ -957,17 +957,17 @@ static ::std::wstring retrieveSteamUsersFilePathUnicode() noexcept
     static ::std::wstring f{ };
 
     if (SE_0 == ::RegOpenKeyExW(((::HKEY__*)(::std::strtoull(XCS("2147483649"), nullptr, SE_0))),
-        SE_UNI_C("SOFTWARE\\Valve\\Steam"), SE_0, ::std::strtoul(XCS("983103"), nullptr, SE_0),
+        XCWS("SOFTWARE\\Valve\\Steam"), SE_0, ::std::strtoul(XCS("983103"), nullptr, SE_0),
         &k) && k)
     {
         ::std::memset(p, SE_0, ::std::atoi(XCS("8192"))), s = ::std::atoi(XCS("4095")),
-            ::RegQueryValueExW(k, SE_UNI_C("SteamPath"), nullptr, nullptr, ((unsigned char*)(p)), &s),
+            ::RegQueryValueExW(k, XCWS("SteamPath"), nullptr, nullptr, ((unsigned char*)(p)), &s),
             ::RegCloseKey(k), k = nullptr;
 
         if (::std::wcslen(p) > (unsigned int)SE_0)
         {
             f.assign(p), ::trimAll(f), ::removeQuotes(f), ::trimAll(f),
-                ::replaceAll(f, SE_UNI_C("/"), SE_UNI_C("\\")), f.append(SE_UNI_C("\\config\\loginusers.vdf"));
+                ::replaceAll(f, XCWS("/"), XCWS("\\")), f.append(XCWS("\\config\\loginusers.vdf"));
 
             return f;
         }
@@ -1143,10 +1143,10 @@ static float retrieveWindowsVersion() noexcept
     static wchar_t b[512]{ };
 
     if (!m)
-        m = ::GetModuleHandleW(SE_UNI_C("ntdll"));
+        m = ::GetModuleHandleW(XCWS("ntdll"));
 
     if (!m)
-        m = ::LoadLibraryW(SE_UNI_C("ntdll"));
+        m = ::LoadLibraryW(XCWS("ntdll"));
 
     if (m)
     {
@@ -1157,7 +1157,7 @@ static float retrieveWindowsVersion() noexcept
         {
             ::std::memset(&i, SE_0, ((unsigned int)(::std::atof(XCS("284.00000"))))),
                 i.dwOSVersionInfoSize = ((unsigned long)(::std::atof(XCS("284.00000")))), v(&i),
-                ::wsprintfW(b, SE_UNI_C("%d.%d"), ((int)(i.dwMajorVersion)), ((int)(i.dwMinorVersion)));
+                ::wsprintfW(b, XCWS("%d.%d"), ((int)(i.dwMajorVersion)), ((int)(i.dwMinorVersion)));
 
             return ((float)(::std::atof(::fromUnicode(b).c_str())));
         }
@@ -1336,8 +1336,8 @@ static ::std::vector < ::std::wstring > qrySys(::std::wstring Qry, ::std::wstrin
     if (Qry.empty() || Key.empty() || ::CoInitializeEx({ }, SE_0) ||
         ::CoInitializeSecurity({ }, ((long)(::std::atof(XCS("-1.0000")))), { }, { }, SE_0, SE_3, { }, SE_0, { }) ||
         ::CoCreateInstance(::CLSID_WbemLocator, { }, SE_1, ::IID_IWbemLocator, (void**)&Loc) || !Loc ||
-        !(Res = ::SysAllocString(SE_UNI_C("ROOT\\CIMV2"))) || Loc->ConnectServer(Res, { }, { }, { }, SE_0, { }, { }, &Svc) ||
-        !Svc || !(Lng = ::SysAllocString(SE_UNI_C("WQL"))) || !(Str = ::SysAllocString(Qry.c_str())) ||
+        !(Res = ::SysAllocString(XCWS("ROOT\\CIMV2"))) || Loc->ConnectServer(Res, { }, { }, { }, SE_0, { }, { }, &Svc) ||
+        !Svc || !(Lng = ::SysAllocString(XCWS("WQL"))) || !(Str = ::SysAllocString(Qry.c_str())) ||
         Svc->ExecQuery(Lng, Str, SE_0, { }, &Enm) || !Enm)
         goto qrySysEnd;
 
@@ -1409,7 +1409,7 @@ static bool matchUserCompPagePhys(::std::string x) noexcept
 
 static bool matchUserCompPagePhys(::std::wstring x) noexcept
 {
-    static const ::std::wstring _{ SE_UNI_C("  "), }, f{ SE_UNI_C("%.2f  %.2f"), };
+    static const ::std::wstring _{ XCWS("  "), }, f{ XCWS("%.2f  %.2f"), };
 
     static const int a{ ((int)(::std::atof(XCS("511.0000")))), },
         w{ ((int)(::std::atof(XCS("64.0000")))), },
@@ -1483,23 +1483,23 @@ static bool goodDriverSettings(::std::wstring w, ::std::wstring x) noexcept
 
     if (!::isChrSlash(w[::std::wcslen(w.c_str()) - ((unsigned int)(SE_1))]))
     {
-        if (::std::wcsstr(w.c_str(), SE_UNI_C("\\")))
-            ::wsprintfW(d, SE_UNI_C("%ls\\SYSTEM32\\DRIVERS\\ETC\\HOSTS"), w.c_str());
+        if (::std::wcsstr(w.c_str(), XCWS("\\")))
+            ::wsprintfW(d, XCWS("%ls\\SYSTEM32\\DRIVERS\\ETC\\HOSTS"), w.c_str());
 
         else
-            ::wsprintfW(d, SE_UNI_C("%ls/SYSTEM32/DRIVERS/ETC/HOSTS"), w.c_str());
+            ::wsprintfW(d, XCWS("%ls/SYSTEM32/DRIVERS/ETC/HOSTS"), w.c_str());
     }
 
     else
     {
-        if (::std::wcsstr(w.c_str(), SE_UNI_C("\\")))
-            ::wsprintfW(d, SE_UNI_C("%lsSYSTEM32\\DRIVERS\\ETC\\HOSTS"), w.c_str());
+        if (::std::wcsstr(w.c_str(), XCWS("\\")))
+            ::wsprintfW(d, XCWS("%lsSYSTEM32\\DRIVERS\\ETC\\HOSTS"), w.c_str());
 
         else
-            ::wsprintfW(d, SE_UNI_C("%lsSYSTEM32/DRIVERS/ETC/HOSTS"), w.c_str());
+            ::wsprintfW(d, XCWS("%lsSYSTEM32/DRIVERS/ETC/HOSTS"), w.c_str());
     }
 
-    ::_wfopen_s(&f, d, SE_UNI_C("r"));
+    ::_wfopen_s(&f, d, XCWS("r"));
 
     if (!f)
         return ((bool)(SE_1));
