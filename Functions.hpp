@@ -1192,11 +1192,10 @@ static void storeBytesToFile(::std::wstring n, ::std::vector < unsigned char > v
 
 static bool isChrSlash(long long llChr) noexcept
 {
-    static const int z{ ((int)(SE_0)), }, o{ ((int)(SE_1)), };
+    static int z{ SE_0, }, o{ SE_1, };
+    static ::std::string s{ XCS("\\/~!@#$"), };
 
-    return (((llChr == ((long long)(XS("\\/^&*()_+").at(z)))) ||
-        (llChr == ((long long)(XS("\\/~!@#$").at(o))))) ?
-        ((bool)(o)) : ((bool)(z)));
+    return (((llChr == ((long long)(s.at(z)))) || (llChr == ((long long)(s.at(o))))) ? ((bool)(o)) : ((bool)(z)));
 }
 
 static ::std::vector < unsigned char > readBinaryFileToMem(::std::string p) noexcept
